@@ -1,0 +1,44 @@
+0 | Starting server.
+1 | Selector registered.
+2 | Accepting connections.
+3 | Trying to select something.
+4 | Selecting a key.
+5 | Trying to select something.
+6 | Selecting a key.
+7 | Trying to select something.
+8 | Selecting a key.
+9 | Trying to select something.
+0 | Starting server.
+1 | Selector registered.
+2 | Accepting connections.
+3 | Trying to select something.
+4 | Selecting a key.
+5 | Trying to select something.
+6 | Selecting a key.
+7 | Trying to select something.
+8 | Selecting a key.
+9 | Trying to select something.
+0 | Starting server.
+1 | Selector registered.
+2 | Accepting connections.
+3 | Trying to select something.
+4 | Selecting a key.
+5 | Trying to select something.
+6 | Selecting a key.
+7 | Trying to select something.
+8 | Selecting a key.
+9 | Trying to select something.
+10 | Selecting a key.
+11 | Trying to select something.
+12 | Selecting a key.
+13 | Trying to select something.
+14 | Selecting a key.
+15 | Trying to select something.
+16 | Selecting a key.
+17 | Trying to select something.
+18 | Selecting a key.
+19 | Trying to select something.
+20 | Selecting a key.
+21 | Trying to select something.
+22 | Selecting a key.
+23 | Trying to select something.

@@ -1,5 +1,0 @@
-0 | Server is now operating.
-1 | Server socket opened.
-0 | Server is now operating.
-1 | Server socket opened.
-2 | Connection time out.

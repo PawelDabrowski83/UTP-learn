@@ -1,0 +1,13 @@
+0 | Client Thread-5 starting.
+1 | Client Thread-5 - connection started with localhost/127.0.0.1.
+2 | My problem is: 10;*;0
+3 | 10;*;0
+4 | Received: null
+5 | My problem is: 2;+;2
+6 | 2;+;2
+7 | Received: null
+8 | My problem is: 10;*;0
+9 | 10;*;0
+10 | Received: null
+11 | Calculations over.
+12 | Client ending.

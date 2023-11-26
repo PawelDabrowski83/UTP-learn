@@ -5,10 +5,12 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.Objects;
 
 public class CalcServer {
     public static final String HOST = "localhost";
     public static final int PORT = 65432;
+    public static final String STOP_CONNECTION = "STOP_CONNECTION";
     private int lineCounter = 0;
     private final String filename = "CalcServerLog.txt";
 
@@ -38,9 +40,15 @@ public class CalcServer {
                         log(logger, "Connection opened.");
                         String request = reader.readLine();
                         log(logger, String.format("Received: %s", request));
-                        String response = solver.solve(request);
-                        sendResponse(writer, logger, response);
+                        calculationLoop:
+                        while (request != null) {
+                            String response = solver.solve(request);
+                            sendResponse(writer, logger, response);
+                            request = reader.readLine();
+                            log(logger, String.format("Received: %s", request));
+                        }
                         log(logger, "Connection closed.");
+
                     }
                 }
             } catch (SocketTimeoutException e) {

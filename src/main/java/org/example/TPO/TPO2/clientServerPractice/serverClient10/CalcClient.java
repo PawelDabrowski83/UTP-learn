@@ -61,6 +61,14 @@ public class CalcClient extends Thread {
     }
 
     public static void main(String[] args) {
-        new CalcClient(CalcServer.HOST, CalcServer.PORT, new CalcTaskService()).start();
+
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(500);
+                new CalcClient(CalcServer.HOST, CalcServer.PORT, new CalcTaskService()).start();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

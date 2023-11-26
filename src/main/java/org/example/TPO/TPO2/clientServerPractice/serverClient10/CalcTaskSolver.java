@@ -10,7 +10,7 @@ public class CalcTaskSolver implements Solvable {
     public String solve(String problem) throws IllegalArgumentException {
         generateDelay();
         if (!validate(problem)) {
-            throw new IllegalArgumentException("Input incorrect.");
+            throw new IllegalArgumentException("Input incorrect." + problem);
         }
         String[] inputs = problem.split(";");
         Double firstNum = Double.parseDouble(inputs[0]);
