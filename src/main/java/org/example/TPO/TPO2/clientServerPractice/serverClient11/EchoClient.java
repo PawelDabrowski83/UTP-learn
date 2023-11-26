@@ -30,7 +30,7 @@ public class EchoClient extends Thread {
         ) {
             writerHandler = writer;
             log("Connection started.");
-            int random = ThreadLocalRandom.current().nextInt(1, 10);
+            int random = ThreadLocalRandom.current().nextInt(1, 20);
             log("Random: " + random);
             for (int i = 0; i < random; i++) {
                 delay();
@@ -72,7 +72,7 @@ public class EchoClient extends Thread {
     }
 
     public static void main(String[] args) {
-        int repeat = 4;
+        int repeat = 12;
         while (repeat-- > 0) {
             new EchoClient(EchoServer.HOST, EchoServer.PORT).start();
         }

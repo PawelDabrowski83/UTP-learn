@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -27,7 +28,8 @@ public class EchoServer {
             throw new IllegalStateException("Cannot run logger on server.");
         }
         try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-             Selector selector = Selector.open()) {
+             ) {
+            Selector selector = Selector.open();
             ssc = serverSocketChannel;
             this.selector = selector;
             serverSocketChannel.configureBlocking(false);
@@ -41,50 +43,54 @@ public class EchoServer {
         }
     }
 
-    private void operate() throws IOException {
+    private void operate() {
         boolean serverIsRunning = true;
         while(serverIsRunning) {
-            int keysNumber = selector.select();
-            log("Number of keys: " + keysNumber);
-            Set<SelectionKey> keys = selector.selectedKeys();
-            Iterator<SelectionKey> iterator = keys.iterator();
-            log("Keys: " + keys.size());
+            try {
+                int keysNumber = selector.select();
+                Set<SelectionKey> keys = selector.selectedKeys();
+                Iterator<SelectionKey> iterator = keys.iterator();
 
-            keyLoop:
-            while (iterator.hasNext()) {
-                log("Looking for next key.");
-                SelectionKey current = iterator.next();
-                iterator.remove();
+                keyLoop:
+                while (iterator.hasNext()) {
+                    SelectionKey current = iterator.next();
+                    iterator.remove();
 
-                if (current.isAcceptable()) {
-                    acceptConnection(current);
-                    continue keyLoop;
-                }
-                if (current.isReadable()) {
-                    readRequest(current);
-                    continue keyLoop;
-                }
-                if (current.isWritable()) {
-                    sendResponse(current);
-                    continue keyLoop;
-                }
+                    if (current.isAcceptable()) {
+                        acceptConnection(current);
+                        continue keyLoop;
+                    }
+                    if (current.isReadable()) {
+                        readRequest(current);
+                        continue keyLoop;
+                    }
+                    if (current.isWritable()) {
+                        sendResponse(current);
+                        continue keyLoop;
+                    }
 
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
 
     private void sendResponse(SelectionKey current) {
         log("Sending response.");
-        try (SocketChannel socketChannel = (SocketChannel) current.channel()) {
+        try {
+            SocketChannel socketChannel = (SocketChannel) current.channel();
             if (!socketChannel.isOpen()) {
                 return;
             }
             String response = (String) current.attachment();
             log("Prepared response is: "+ response);
+            if (response == null) {
+                response = "";
+            }
             ByteBuffer buffer = ByteBuffer.wrap(response.getBytes());
             socketChannel.write(buffer);
-            log("Written to buffer");
-            socketChannel.register(current.selector(), SelectionKey.OP_READ);
+            socketChannel.register(selector, SelectionKey.OP_READ);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +98,8 @@ public class EchoServer {
 
     private void readRequest(SelectionKey current) {
         log("Reading request.");
-        try (SocketChannel socketChannel = (SocketChannel) current.channel()) {
+        try {
+            SocketChannel socketChannel = (SocketChannel) current.channel();
             if (!socketChannel.isOpen()) {
                 return;
             }
@@ -101,13 +108,14 @@ public class EchoServer {
 
             if (bytesRead == -1) {
                 log("Connection closed.");
+                current.channel().close();
             } else {
                 byteBuffer.flip();
                 byte[] data = new byte[byteBuffer.remaining()];
                 byteBuffer.get(data);
                 String request = new String(data);
                 log("Received: " + request);
-                socketChannel.register(current.selector(), SelectionKey.OP_WRITE | SelectionKey.OP_READ, request);
+                socketChannel.register(selector, SelectionKey.OP_WRITE, request);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,11 +124,14 @@ public class EchoServer {
 
     private void acceptConnection(SelectionKey current) throws IOException {
         try {
-            SocketChannel socketChannel = ssc.accept();
+            ServerSocketChannel serverSocketChannel = (ServerSocketChannel) current.channel();
+            SocketChannel socketChannel = serverSocketChannel.accept();
             socketChannel.configureBlocking(false);
-            socketChannel.register(current.selector(), SelectionKey.OP_READ);
+            socketChannel.register(selector, SelectionKey.OP_READ);
+
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 
