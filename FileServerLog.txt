@@ -1,0 +1,30 @@
+0 || Server || Lorem ipsum
+1 || Server || Avangardum
+2 || Server || Dziś w imieniu Fundacja Science Watch Polska uczestniczyłam w rozprawie w Sądzie Okręgowym we Wrocławiu przeciwko Politechnika Wrocławska
+3 || Server || Zeznania świadków są przytłaczające. Pani profesor, przełożona i kierownik zakładu:
+4 || Server || - decydowała z kim pracownik ma się spotykać, co może jeść, jak ma się ubierać, jak może się czesać,
+5 || Server || - dzwoniła lub wysyłała sms-y do pracowników w weekendy, w czasie urlopu, w nocy,
+6 || Server || - pracownicy prowadzili za przełożoną zajęcia, seminaria, wykłady, konsultacje,
+7 || Server || - pracownicy przygotowywali przełożonej publikacje, recenzje, opinie, kartki świąteczne, kanapki na przyjęcia, rozrywkę np. na czas  dłuższej podróży itd.
+8 || Server || - uniemożliwiała awans naukowy, publikowanie artykułów, wyjazdów konferencyjnych,
+9 || Server || - krzyczała, ubliżała, wyzywała, obgadywała, plotkowała, traktowała pracowników jak powietrze, nastawiała pracowników przeciwko sobie, pomawiała, skłócała, sugerowała choroby psychiczne, choroby alkoholowe, problemy rodzinne,
+10 || Server || - odbierała pracownikom autorskie wykłady, środki finansowe na badania, gabinety pracownicze, dostęp do aparatury i laboratoriów.
+11 || Server || Doktorantów traktowała jeszcze gorzej...
+12 || Server || Wszystko w majestacie prawa, gdyż o zachowaniach pani profesor wiedział dziekan, rektor, związki zawodowe na uczelni, a na Politechnice Wrocławskiej istnieją procedury antymobbingowe.
+13 || Server || Czekamy na dalszy ciąg sprawy.
+14 || Server || STOP
+0 || Server || Lorem ipsum
+1 || Server || Avangardum
+2 || Server || Dziś w imieniu Fundacja Science Watch Polska uczestniczyłam w rozprawie w Sądzie Okręgowym we Wrocławiu przeciwko Politechnika Wrocławska
+3 || Server || Zeznania świadków są przytłaczające. Pani profesor, przełożona i kierownik zakładu:
+4 || Server || - decydowała z kim pracownik ma się spotykać, co może jeść, jak ma się ubierać, jak może się czesać,
+5 || Server || - dzwoniła lub wysyłała sms-y do pracowników w weekendy, w czasie urlopu, w nocy,
+6 || Server || - pracownicy prowadzili za przełożoną zajęcia, seminaria, wykłady, konsultacje,
+7 || Server || - pracownicy przygotowywali przełożonej publikacje, recenzje, opinie, kartki świąteczne, kanapki na przyjęcia, rozrywkę np. na czas  dłuższej podróży itd.
+8 || Server || - uniemożliwiała awans naukowy, publikowanie artykułów, wyjazdów konferencyjnych,
+9 || Server || - krzyczała, ubliżała, wyzywała, obgadywała, plotkowała, traktowała pracowników jak powietrze, nastawiała pracowników przeciwko sobie, pomawiała, skłócała, sugerowała choroby psychiczne, choroby alkoholowe, problemy rodzinne,
+10 || Server || - odbierała pracownikom autorskie wykłady, środki finansowe na badania, gabinety pracownicze, dostęp do aparatury i laboratoriów.
+11 || Server || Doktorantów traktowała jeszcze gorzej...
+12 || Server || Wszystko w majestacie prawa, gdyż o zachowaniach pani profesor wiedział dziekan, rektor, związki zawodowe na uczelni, a na Politechnice Wrocławskiej istnieją procedury antymobbingowe.
+13 || Server || Czekamy na dalszy ciąg sprawy.
+14 || Server || STOP

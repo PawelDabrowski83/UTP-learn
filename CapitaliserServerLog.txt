@@ -1,0 +1,23 @@
+0 ||  || HELLO
+1 || T1 || CONFIRM
+2 || T1 || ALA
+3 || T1 || MA
+4 || T1 || KOTA
+5 || T1 || FINISHED
+6 ||  || HELLO
+7 || T3 || CONFIRM
+8 || T3 || LITWO,
+9 || T3 || OJCZYZNO
+10 || T3 || MOJA,
+11 || T3 || TY
+12 || T3 || JESTEŚ
+13 || T3 || HELLO
+14 || T2 || CONFIRM
+15 || T2 || KIEDY
+16 || T2 || RANNE
+17 || T2 || WSTAJĄ
+18 || T2 || ZORZE,
+19 || T2 || NIC
+20 || T2 || MU
+21 || T2 || WIĘCEJ
+22 || T2 || NIE
