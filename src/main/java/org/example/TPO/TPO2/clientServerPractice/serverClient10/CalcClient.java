@@ -6,10 +6,12 @@ import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CalcClient extends Thread {
+    private Problemable sourceOfSolvableProblems;
     private String host;
     private int port;
     private AtomicInteger lineCounter = new AtomicInteger(0);
-    public CalcClient(String host, int port) {
+    public CalcClient(String host, int port, Problemable sourceOfSolvableProblems) {
+        this.sourceOfSolvableProblems = sourceOfSolvableProblems;
         this.host = host;
         this.port = port;
     }
@@ -24,12 +26,24 @@ public class CalcClient extends Thread {
                  BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))
             ) {
                 logToFile(logger, String.format("Client %s - connection started with %s.", getName(), socket.getInetAddress()));
+                int repeats = 3;
+                while (repeats-- > 0) {
+                    String problem = sourceOfSolvableProblems.getProblem();
+                    logToFile(logger, String.format("My problem is: %s", problem));
+                    sendRequest(writer, logger, problem);
+                    String response = reader.readLine();
+                    logToFile(logger, String.format("Received: %s", response));
+                }
+                logToFile(logger, "Calculations over.");
+
+
+
             } catch (ConnectException e) {
                 logToFile(logger, "Connection refused.");
             }
 
 
-
+            logToFile(logger, "Client ending.");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,6 +61,6 @@ public class CalcClient extends Thread {
     }
 
     public static void main(String[] args) {
-        new CalcClient("localhost", 65432).start();
+        new CalcClient("localhost", 65432, new CalcTaskService()).start();
     }
 }
