@@ -1,4 +1,0 @@
-0 | Client Thread-3 starting.
-1 | Client Thread-3 - connection started with localhost/127.0.0.1.
-2 | My problem is: 3;*;9
-3 | 3;*;9
