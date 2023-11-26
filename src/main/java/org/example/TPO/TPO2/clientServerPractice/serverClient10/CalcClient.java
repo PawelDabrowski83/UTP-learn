@@ -61,6 +61,6 @@ public class CalcClient extends Thread {
     }
 
     public static void main(String[] args) {
-        new CalcClient("localhost", 65432, new CalcTaskService()).start();
+        new CalcClient(CalcServer.HOST, CalcServer.PORT, new CalcTaskService()).start();
     }
 }
