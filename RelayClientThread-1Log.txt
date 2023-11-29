@@ -1,6 +1,0 @@
-0 || Client started running.
-1 || Connection closed by exception.
-2 || Closing client.
-0 || Client started running.
-1 || Opening connection.
-2 || Exception on selector level.

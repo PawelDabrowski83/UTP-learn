@@ -24,17 +24,19 @@ public class RelayServer {
     private final int CONNECTION_TIMEOUT = 8000;
 
     public RelayServer() {
-        try (PrintWriter logger = new PrintWriter(new FileWriter(FILENAME, true), true)) {
+        try (PrintWriter logger = new PrintWriter(new FileWriter(FILENAME), true)) {
             this.logger = logger;
             log("Server started.");
 
-            try (ServerSocketChannel ssc = ServerSocketChannel.open()) {
+            try {
+                ServerSocketChannel ssc = ServerSocketChannel.open();
                 selector = Selector.open();
                 ssc.configureBlocking(false);
                 ssc.socket().setSoTimeout(8000);
                 ssc.socket().bind(new InetSocketAddress(HOST, PORT));
                 ssc.register(selector, SelectionKey.OP_ACCEPT);
                 operate();
+                ssc.close();
             } catch (IOException e) {
                 log("Connection closed by exception.");
             }
@@ -63,13 +65,13 @@ public class RelayServer {
 
                 while (iterator.hasNext()) {
                     SelectionKey current = iterator.next();
+                    iterator.remove();
 
                     if (current.isAcceptable()) {
                         handleAccept(current);
                     } else if(current.isReadable()) {
                         readRequest(current);
                     }
-                    iterator.remove();
                 }
             } catch (IOException e) {
                 log("Key-level exception.");
@@ -77,12 +79,17 @@ public class RelayServer {
         }
     }
 
-    private void handleAccept(SelectionKey current) throws IOException {
-        ServerSocketChannel serverSocketChannel = (ServerSocketChannel) current.channel();
-        SocketChannel sc = serverSocketChannel.accept();
-        sc.configureBlocking(false);
-        sc.register(selector, SelectionKey.OP_READ);
-        log("Registering connection with client.");
+    private void handleAccept(SelectionKey current) {
+        try {
+            ServerSocketChannel serverSocketChannel = (ServerSocketChannel) current.channel();
+            SocketChannel sc = serverSocketChannel.accept();
+            sc.configureBlocking(false);
+            sc.register(selector, SelectionKey.OP_READ);
+            log("Registering connection with client.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            log(e.getMessage());
+        }
     }
 
     private void readRequest(SelectionKey current) throws IOException {
@@ -98,7 +105,7 @@ public class RelayServer {
             buffer.flip();
             byte[] data = new byte[buffer.remaining()];
             buffer.get(data);
-            String message = new String(data);
+            String message = new String(data) + System.lineSeparator();
             String user = sc.getRemoteAddress().toString();
             String niceMessage = String.format("(from: %s) : %s", user, message);
             log(niceMessage);

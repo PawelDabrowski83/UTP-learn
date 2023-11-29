@@ -29,18 +29,20 @@ public class RelayClient extends Thread {
 
     @Override
     public void run() {
-        try (PrintWriter logger = new PrintWriter(new FileWriter(FILENAME, true), true)) {
+        try (PrintWriter logger = new PrintWriter(new FileWriter(FILENAME), true)) {
             this.logger = logger;
             log("Client started running.");
 
-            try (SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(host, port))) {
+            try {
+                SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(host, port));
                 log("Opening connection.");
                 socketChannel.configureBlocking(false);
                 socketChannel.socket().setSoTimeout(10000);
                 selector = Selector.open();
-                socketChannel.register(selector, SelectionKey.OP_CONNECT);
+                socketChannel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ | SelectionKey.OP_WRITE);
                 operate();
                 log("Closing connection.");
+                socketChannel.close();
             } catch (IOException e) {
                 log("Connection closed by exception.");
             }
@@ -80,13 +82,17 @@ public class RelayClient extends Thread {
         }
     }
 
-    private void handleConnect(SelectionKey current) throws IOException {
-        SocketChannel sc = (SocketChannel) current.channel();
-        if (sc.isConnectionPending()) {
-            sc.finishConnect();
-            log("Connected to server.");
+    private void handleConnect(SelectionKey current)  {
+        try {
+            SocketChannel sc = (SocketChannel) current.channel();
+            if (sc.isConnectionPending()) {
+                sc.finishConnect();
+                log("Connected to server.");
+            }
+            sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+        } catch (IOException e) {
+            log(e.getMessage());
         }
-        sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
     }
 
     private void readResponse(SelectionKey current) throws IOException {
@@ -98,12 +104,15 @@ public class RelayClient extends Thread {
             current.cancel();
             log("Connection closed by server.");
             sc.close();
+            System.exit(1);
         } else if (bytesRead > 0) {
             buffer.flip();
             byte[] data = new byte[buffer.remaining()];
             buffer.get(data);
             log("Received: " + new String(data));
         }
+//        sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+        current.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 
     }
 
@@ -114,12 +123,15 @@ public class RelayClient extends Thread {
             String message = getName() + " || " + storage[sentLines++];
             ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
             sc.write(buffer);
-            current.interestOps(SelectionKey.OP_READ);
+            current.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+//            sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         } else {
             log("Storage fullfilled. Closing");
             current.cancel();
             sc.close();
+            System.exit(1);
         }
+
     }
 
 

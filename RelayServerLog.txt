@@ -1,5 +1,0 @@
-0 || Server started.
-1 || Registering connection with client.
-2 || Registering connection with client.
-3 || Registering connection with client.
-4 || Registering connection with client.
