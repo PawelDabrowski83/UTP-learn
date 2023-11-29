@@ -53,7 +53,6 @@ public class RelayClient extends Thread {
 
     private void operate() {
         while(!isInterrupted()) {
-            log("Checking the keys");
             try {
                 int readyChannels = selector.select();
                 if (readyChannels == 0) {
@@ -131,6 +130,9 @@ public class RelayClient extends Thread {
     }
 
     public static void main(String[] args) {
-        new RelayClient(RelayServer.HOST, RelayServer.PORT).start();
+        int repeat = 4;
+        while (repeat-- > 0) {
+            new RelayClient(RelayServer.HOST, RelayServer.PORT).start();
+        }
     }
 }

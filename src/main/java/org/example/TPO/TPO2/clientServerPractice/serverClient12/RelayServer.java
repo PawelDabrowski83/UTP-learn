@@ -47,8 +47,6 @@ public class RelayServer {
     private void operate() {
         long lastConnectionTime = System.currentTimeMillis();
         while (true) {
-            log("Checking the keys.");
-
             try {
                 int readyChannels = selector.select();
                 if (readyChannels == 0) {
