@@ -18,7 +18,6 @@ public class EchoServer {
     public static final int PORT = 65432;
     private int lineCounter = 0;
     private PrintWriter logger;
-    private ServerSocketChannel ssc;
     private Selector selector;
 
     public EchoServer() {
@@ -30,7 +29,6 @@ public class EchoServer {
         try (ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
              ) {
             Selector selector = Selector.open();
-            ssc = serverSocketChannel;
             this.selector = selector;
             serverSocketChannel.configureBlocking(false);
             serverSocketChannel.socket().setSoTimeout(8000);

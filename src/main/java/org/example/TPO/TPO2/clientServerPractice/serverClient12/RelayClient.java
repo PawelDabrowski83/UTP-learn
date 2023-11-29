@@ -15,13 +15,12 @@ import java.util.Set;
 public class RelayClient extends Thread {
     private int lineCouner = 0;
     private Selector selector;
-    private BufferedReader bufferedReader;
-    private ByteBuffer buffer;
-    private PrintWriter printWriter;
     private PrintWriter logger;
     private final String FILENAME = RelayClient.class.getSimpleName() + getName() + "Log.txt";
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
+    private String[] storage = RelayGenerator.generateMessages();
+    private int sentLines = 0;
 
     public RelayClient(String host, int port) {
         this.host = host;
@@ -93,7 +92,7 @@ public class RelayClient extends Thread {
 
     private void readResponse(SelectionKey current) throws IOException {
         SocketChannel sc = (SocketChannel) current.channel();
-        buffer = ByteBuffer.allocate(1024);
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
         int bytesRead = sc.read(buffer);
 
         if (bytesRead == -1) {
@@ -109,8 +108,19 @@ public class RelayClient extends Thread {
 
     }
 
-    private void sendRequest(SelectionKey current) {
-
+    private void sendRequest(SelectionKey current) throws IOException {
+        SocketChannel sc = (SocketChannel) current.channel();
+        log("Client still have messages to send.");
+        if (sentLines < storage.length) {
+            String message = getName() + " || " + storage[sentLines++];
+            ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
+            sc.write(buffer);
+            current.interestOps(SelectionKey.OP_READ);
+        } else {
+            log("Storage fullfilled. Closing");
+            current.cancel();
+            sc.close();
+        }
     }
 
 
