@@ -67,13 +67,16 @@ public class RelayServer {
                     SelectionKey current = iterator.next();
                     iterator.remove();
 
-                    if (current.isAcceptable()) {
+                    if (current.isValid() && current.isAcceptable()) {
                         handleAccept(current);
-                    } else if(current.isReadable()) {
+                    } else if(current.isValid() && current.isReadable()) {
                         readRequest(current);
+                    } else if(current.isValid() && current.isWritable()) {
+                        broadcast(current);
                     }
                 }
             } catch (IOException e) {
+                e.printStackTrace();
                 log("Key-level exception.");
             }
         }
@@ -110,19 +113,26 @@ public class RelayServer {
             String niceMessage = String.format("(from: %s) : %s", user, message);
             log(niceMessage);
 
-            broadcast(niceMessage);
+            current.attach(niceMessage);
+            current.interestOps(SelectionKey.OP_WRITE);
+        } else {
+            current.interestOps(SelectionKey.OP_READ);
         }
     }
 
-    private void broadcast(String message) throws IOException {
+    private void broadcast(SelectionKey current) throws IOException {
+        String message = (String) current.attachment();
         for (SelectionKey key : Selector.open().keys()) {
             if (key.isValid() && key.channel() instanceof SocketChannel) {
                 SocketChannel sc = (SocketChannel) key.channel();
+                log("Broadcasting: " + message);
                 sc.write(
                         ByteBuffer.wrap(message.getBytes())
                 );
             }
         }
+        current.interestOps(SelectionKey.OP_READ);
+
     }
     private void log(String message) {
         logger.println(

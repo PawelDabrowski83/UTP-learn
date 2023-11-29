@@ -39,7 +39,7 @@ public class RelayClient extends Thread {
                 socketChannel.configureBlocking(false);
                 socketChannel.socket().setSoTimeout(10000);
                 selector = Selector.open();
-                socketChannel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+                socketChannel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ);
                 operate();
                 log("Closing connection.");
                 socketChannel.close();
@@ -66,11 +66,11 @@ public class RelayClient extends Thread {
                 while(iterator.hasNext()) {
                     SelectionKey current = iterator.next();
 
-                    if (current.isConnectable()) {
+                    if (current.isValid() && current.isConnectable()) {
                         handleConnect(current);
-                    } else if (current.isReadable()) {
+                    } else if (current.isValid() && current.isReadable()) {
                         readResponse(current);
-                    } else if (current.isWritable()) {
+                    } else if (current.isValid() && current.isWritable()) {
                         sendRequest(current);
                     }
                     iterator.remove();
@@ -89,7 +89,7 @@ public class RelayClient extends Thread {
                 sc.finishConnect();
                 log("Connected to server.");
             }
-            sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+            current.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         } catch (IOException e) {
             log(e.getMessage());
         }
@@ -111,7 +111,6 @@ public class RelayClient extends Thread {
             buffer.get(data);
             log("Received: " + new String(data));
         }
-//        sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         current.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 
     }
@@ -124,7 +123,6 @@ public class RelayClient extends Thread {
             ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
             sc.write(buffer);
             current.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-//            sc.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         } else {
             log("Storage fullfilled. Closing");
             current.cancel();
