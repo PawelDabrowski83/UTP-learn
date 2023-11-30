@@ -42,6 +42,7 @@ public class IterClient extends Thread {
     }
 
     private void operate(SocketChannel socketChannel) {
+        log("Sending message");
         String message = "HELLO";
         ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
         try {
@@ -56,5 +57,17 @@ public class IterClient extends Thread {
         logger.println(
                 String.format("%d || %s", lineCounter++, message)
         );
+    }
+
+    public static void main(String[] args) {
+        int repeat = 50;
+        while (repeat-- > 0) {
+//            try {
+////                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            new IterClient(IterServer.HOST, IterServer.PORT).start();
+        }
     }
 }

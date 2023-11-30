@@ -6,9 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -82,19 +84,68 @@ public class IterServer {
                         readRequest(current);
                         continue;
                     }
-                    if (current.isWritable()) {
-                        sendResponse(current);
-                    }
+//                    if (current.isWritable()) {
+//                        sendResponse(current);
+//                    }
                 }
             }
         }
 
 
+
+
+    }
+
+    private void acceptConnection(SelectionKey current) {
+        log("Establishing connection.");
+        ServerSocketChannel ssc = (ServerSocketChannel) current.channel();
+        try {
+            SocketChannel socketChannel = ssc.accept();
+            socketChannel.configureBlocking(false);
+            socketChannel.register(sel, SelectionKey.OP_READ);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            log("Exception on establishing connection.");
+        }
+    }
+
+    private void readRequest(SelectionKey current) {
+        log("Reading...");
+        try (SocketChannel socketChannel = (SocketChannel) current.channel()) {
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            int bytesRead = 0;
+            try {
+                bytesRead = socketChannel.read(buffer);
+            } catch (IOException e) {
+                e.printStackTrace();
+                log("Exception on reading from buffer.");
+            }
+
+            if (bytesRead == -1) {
+                log("Connection closed.");
+                current.cancel();
+            }
+            if (bytesRead > 0) {
+                buffer.flip();
+                byte[] data = new byte[buffer.remaining()];
+                buffer.get(data);
+                String message = new String(data);
+                log("Received: " + message);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            log("Exception on retrieving channel.");
+        }
     }
 
     private void log(String message) {
         logger.println(
                 String.format("%d || %s", lineCounter++, message)
         );
+    }
+
+    public static void main(String[] args) {
+        new IterServer();
     }
 }
