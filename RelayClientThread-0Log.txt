@@ -1,2 +1,0 @@
-0 || Client started running.
-1 || Opening connection.
