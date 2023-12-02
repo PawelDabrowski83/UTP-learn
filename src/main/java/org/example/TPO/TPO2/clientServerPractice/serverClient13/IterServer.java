@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -205,6 +206,12 @@ public class IterServer {
         } catch (IOException e) {
             e.printStackTrace();
             log("Exception on reading from buffer.");
+            try {
+                log("Closing connection.");
+                socketChannel.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
         if (bytesRead == -1) {

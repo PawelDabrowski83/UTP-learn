@@ -1,0 +1,11 @@
+0 || Starting server.
+1 || Server operating.
+2 || Establishing connection.
+3 || Establishing connection.
+4 || Establishing connection.
+5 || Establishing connection.
+6 || Establishing connection.
+7 || Reading...
+8 || Exception on reading from buffer.
+9 || Closing connection.
+10 || Received: 

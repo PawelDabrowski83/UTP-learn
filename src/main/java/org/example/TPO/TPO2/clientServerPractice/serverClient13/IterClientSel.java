@@ -40,8 +40,7 @@ public class IterClientSel extends Thread {
                 selector = Selector.open();
 
                 socketChannel.configureBlocking(false);
-                socketChannel.socket().bind(new InetSocketAddress(host, port));
-                socketChannel.socket().setSoTimeout(5000);
+                socketChannel.connect(new InetSocketAddress(host, port));
                 socketChannel.register(selector, SelectionKey.OP_CONNECT);
                 operate();
                 selector.close();
@@ -62,7 +61,7 @@ public class IterClientSel extends Thread {
         while(true) {
             int readyChannels;
             try {
-                readyChannels = selector.select(5000);
+                readyChannels = selector.select();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -102,7 +101,8 @@ public class IterClientSel extends Thread {
             try {
                 log("Connecting.");
                 socketChannel.finishConnect();
-                current.interestOps(SelectionKey.OP_WRITE);
+//                current.interestOps(SelectionKey.OP_WRITE);
+                socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
             } catch (IOException e) {
                 log("Exception on finishing connection.");
                 e.printStackTrace();
@@ -171,6 +171,7 @@ public class IterClientSel extends Thread {
         SocketChannel socketChannel = (SocketChannel) current.channel();
 
         String request = prepareRequest();
+        log("Request prepared: " + request);
         if (request == null) {
             current.cancel();
             try {
@@ -212,5 +213,13 @@ public class IterClientSel extends Thread {
 
     private void logException(String message) {
         log("Exception on " + message + ".");
+    }
+
+
+    public static void main(String[] args) {
+        int repeat = 5;
+        while (repeat-- > 0) {
+            new IterClientSel(IterServer.HOST, IterServer.PORT).start();
+        }
     }
 }

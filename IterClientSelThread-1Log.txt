@@ -1,0 +1,2 @@
+0 || Starting client.
+1 || Connecting.
