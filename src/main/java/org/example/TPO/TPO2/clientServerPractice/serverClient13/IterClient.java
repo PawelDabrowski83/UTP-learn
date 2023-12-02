@@ -28,7 +28,7 @@ public class IterClient extends Thread {
         problems = prepareProblemsList();
     }
 
-    private List<String> prepareProblemsList() {
+    public static List<String> prepareProblemsList() {
         List<String> numbers = new ArrayList<>();
         int roll = ThreadLocalRandom.current().nextInt(2, 12);
         for (int i = 0; i < roll; i++) {
@@ -148,13 +148,13 @@ public class IterClient extends Thread {
     }
 
     public static void main(String[] args) {
-        int repeat = 1;
+        int repeat = 10;
         while (repeat-- > 0) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             new IterClient(IterServer.HOST, IterServer.PORT).start();
         }
     }
