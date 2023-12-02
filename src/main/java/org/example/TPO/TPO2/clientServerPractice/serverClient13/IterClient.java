@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +48,11 @@ public class IterClient extends Thread {
             logger = writerToFile;
             log("Starting client.");
 
-            try (SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(host, port))) {
-                socketChannel.configureBlocking(false);
+            try (SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(host, port));
+                 Selector selector = Selector.open();
+            ) {
                 socketChannel.socket().setSoTimeout(8000);
+//                socketChannel.register(selector, SelectionKey.OP_WRITE);
                 operate(socketChannel);
 
             } catch (IOException e) {
@@ -64,9 +68,19 @@ public class IterClient extends Thread {
 
     private void operate(SocketChannel socketChannel) {
         log("Operating");
+
         int step = 0;
         while (true) {
-            String request = problems.get(step++);
+            String request = "";
+        try {
+            request = problems.get(step++);
+        } catch (IndexOutOfBoundsException e) {
+            try {
+                socketChannel.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
             log("Sending: " + request);
             sendRequest(socketChannel, request);
             String response = readResponse(socketChannel);
@@ -86,6 +100,7 @@ public class IterClient extends Thread {
     }
 
     private void sendRequest(SocketChannel socketChannel, String message) {
+        message = message + System.lineSeparator();
         ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
         try {
             log("Writing: " + message);
@@ -118,6 +133,7 @@ public class IterClient extends Thread {
         if (readBytes > 0) {
             buffer.flip();
             byte[] data = new byte[buffer.remaining()];
+            buffer.get(data);
             response = new String(data);
         }
         return response;

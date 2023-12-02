@@ -1,0 +1,95 @@
+0 || Starting server.
+1 || Server operating.
+2 || Establishing connection.
+3 || Reading...
+4 || Received: HELLO
+
+5 || Sending response.
+6 || My response is: CONFIRM
+7 || Writing: CONFIRM
+
+8 || Reading...
+9 || Received: 123
+
+10 || Sending response.
+11 || My response is: 124
+12 || Writing: 124
+
+13 || Reading...
+14 || Received: 158
+
+15 || Sending response.
+16 || My response is: 159
+17 || Writing: 159
+
+18 || Reading...
+19 || Received: -155
+
+20 || Sending response.
+21 || My response is: -154
+22 || Writing: -154
+
+23 || Reading...
+24 || Received: -115
+
+25 || Sending response.
+26 || My response is: -114
+27 || Writing: -114
+
+28 || Reading...
+29 || Received: -5
+
+30 || Sending response.
+31 || My response is: -4
+32 || Writing: -4
+
+33 || Reading...
+34 || Received: -25
+
+35 || Sending response.
+36 || My response is: -24
+37 || Writing: -24
+
+38 || Reading...
+39 || Received: 110
+
+40 || Sending response.
+41 || My response is: 111
+42 || Writing: 111
+
+43 || Reading...
+44 || Received: -180
+
+45 || Sending response.
+46 || My response is: -179
+47 || Writing: -179
+
+48 || Reading...
+49 || Received: -91
+
+50 || Sending response.
+51 || My response is: -90
+52 || Writing: -90
+
+53 || Reading...
+54 || Received: -104
+
+55 || Sending response.
+56 || My response is: -103
+57 || Writing: -103
+
+58 || Reading...
+59 || Received: 138
+
+60 || Sending response.
+61 || My response is: 139
+62 || Writing: 139
+
+63 || Reading...
+64 || Received: STOP
+
+65 || Sending response.
+66 || My response is: STOPPING
+67 || Writing: STOPPING
+
+68 || Closing channel.

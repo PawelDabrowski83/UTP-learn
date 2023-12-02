@@ -155,11 +155,18 @@ public class IterServer {
 
     private void sendResponse(SelectionKey current) {
         log("Sending response.");
+        boolean isEnding = false;
         SocketChannel socketChannel = (SocketChannel) current.channel();
         String response = (String) current.attachment();
+        log("My response is: " + response);
         if (response == null) {
             log("Response is null");
+            response = "";
         }
+        if ("STOPPING".equals(response)) {
+            isEnding = true;
+        }
+        response = response + System.lineSeparator();
         ByteBuffer buffer = ByteBuffer.wrap(response.getBytes());
         try {
             socketChannel.write(buffer);
@@ -168,7 +175,19 @@ public class IterServer {
             log("Error on write.");
             throw new RuntimeException(e);
         }
-        current.interestOps(SelectionKey.OP_READ);
+
+        if (isEnding) {
+            current.cancel();
+            try {
+                log("Closing channel.");
+                socketChannel.close();
+            } catch (IOException e) {
+                log("Exception on closing.");
+                e.printStackTrace();
+            }
+        } else {
+            current.interestOps(SelectionKey.OP_READ);
+        }
     }
 
     private void log(String message) {
