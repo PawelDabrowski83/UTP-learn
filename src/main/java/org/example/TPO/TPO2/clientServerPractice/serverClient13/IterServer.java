@@ -186,9 +186,9 @@ public class IterServer {
                 log("Exception on closing.");
                 e.printStackTrace();
             }
-        } else {
-            current.interestOps(SelectionKey.OP_READ);
         }
+        current.interestOps(SelectionKey.OP_READ);
+
     }
 
     private void log(String message) {
