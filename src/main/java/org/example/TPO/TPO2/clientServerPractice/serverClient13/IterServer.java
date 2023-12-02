@@ -102,7 +102,7 @@ public class IterServer {
         try {
             SocketChannel socketChannel = ssc.accept();
             socketChannel.configureBlocking(false);
-            socketChannel.register(sel, SelectionKey.OP_READ);
+            socketChannel.register(sel, SelectionKey.OP_READ, SelectionKey.OP_WRITE);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -150,6 +150,7 @@ public class IterServer {
 
     private String calculateResponse(String number) {
         int request = Integer.parseInt(number);
+        return String.valueOf(++request);
     }
 
     private void sendResponse(SelectionKey current) {

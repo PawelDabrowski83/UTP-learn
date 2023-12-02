@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class IterClient extends Thread {
     private String host;
@@ -14,10 +17,27 @@ public class IterClient extends Thread {
     private PrintWriter logger;
     private String filename = "IterClient" + getName() + ".txt";
     private String lastReceived;
+    private List<String> problems;
+    private List<String> answers = new ArrayList<>();
 
     public IterClient(String host, int port) {
         this.host = host;
         this.port = port;
+        problems = prepareProblemsList();
+    }
+
+    private List<String> prepareProblemsList() {
+        List<String> numbers = new ArrayList<>();
+        int roll = ThreadLocalRandom.current().nextInt(2, 12);
+        for (int i = 0; i < roll; i++) {
+            int number = ThreadLocalRandom.current().nextInt(-200, 200);
+            numbers.add(String.valueOf(number));
+        }
+        List<String> result = new ArrayList<>();
+        result.add("HELLO");
+        result.addAll(numbers);
+        result.add("STOP");
+        return result;
     }
 
     @Override
@@ -43,16 +63,67 @@ public class IterClient extends Thread {
     }
 
     private void operate(SocketChannel socketChannel) {
-        log("Sending message");
-        String message = "HELLO";
+        log("Operating");
+        int step = 0;
+        while (true) {
+            String request = problems.get(step++);
+            log("Sending: " + request);
+            sendRequest(socketChannel, request);
+            String response = readResponse(socketChannel);
+            log("Received: " + response);
+            answers.add(response);
+            if(response != null && "STOPPING".equals(response.trim())) {
+                try {
+                    log("Closing channel.");
+                    socketChannel.close();
+                    break;
+                } catch (IOException e) {
+                    log("Exception on closing channel.");
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    private void sendRequest(SocketChannel socketChannel, String message) {
         ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
         try {
+            log("Writing: " + message);
             socketChannel.write(buffer);
-
         } catch (IOException e) {
+            log("Exception on writing.");
             e.printStackTrace();
         }
     }
+
+    private String readResponse(SocketChannel socketChannel) {
+        String response = "";
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        int readBytes = 0;
+        try {
+            readBytes = socketChannel.read(buffer);
+        } catch (IOException e) {
+            log("Exception on reading socket.");
+            e.printStackTrace();
+        }
+        if (readBytes == -1) {
+            log("Connection closed.");
+            try {
+                socketChannel.close();
+            } catch (IOException e) {
+                log("Exception on closing connection.");
+                e.printStackTrace();
+            }
+        }
+        if (readBytes > 0) {
+            buffer.flip();
+            byte[] data = new byte[buffer.remaining()];
+            response = new String(data);
+        }
+        return response;
+    }
+
+
 
     private void log(String message) {
         logger.println(
@@ -61,13 +132,13 @@ public class IterClient extends Thread {
     }
 
     public static void main(String[] args) {
-        int repeat = 50;
+        int repeat = 1;
         while (repeat-- > 0) {
-//            try {
-////                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             new IterClient(IterServer.HOST, IterServer.PORT).start();
         }
     }
