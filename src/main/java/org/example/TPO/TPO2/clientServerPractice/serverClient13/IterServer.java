@@ -113,8 +113,73 @@ public class IterServer {
     private void readRequest(SelectionKey current) {
         log("Reading...");
         SocketChannel socketChannel = (SocketChannel) current.channel();
+        String request = readFromChannel(socketChannel);
+        log("Received: " + request);
+        String response = prepareResponse(request);
+
+        current.attach(response);
+        current.interestOps(SelectionKey.OP_WRITE);
+
+    }
+
+    private String prepareResponse(String request) {
+        String response = "";
+        if (request != null && !request.isEmpty()) {
+            request = request.trim();
+            if ("HELLO".equals(request)) {
+                response = "CONFIRM";
+            }
+            if ("STOP".equals(request)) {
+                response = "STOPPING";
+            }
+            if (isStringNumbered(request)) {
+                response = calculateResponse(request);
+            }
+        }
+        return response;
+    }
+
+    private boolean isStringNumbered(String word) {
+        try {
+            Integer.parseInt(word);
+            return true;
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
+    }
+
+    private String calculateResponse(String number) {
+        int request = Integer.parseInt(number);
+    }
+
+    private void sendResponse(SelectionKey current) {
+        log("Sending response.");
+        SocketChannel socketChannel = (SocketChannel) current.channel();
+        String response = (String) current.attachment();
+        if (response == null) {
+            log("Response is null");
+        }
+        ByteBuffer buffer = ByteBuffer.wrap(response.getBytes());
+        try {
+            socketChannel.write(buffer);
+            log("Writing: " + response);
+        } catch (IOException e) {
+            log("Error on write.");
+            throw new RuntimeException(e);
+        }
+        current.interestOps(SelectionKey.OP_READ);
+    }
+
+    private void log(String message) {
+        logger.println(
+                String.format("%d || %s", lineCounter++, message)
+        );
+    }
+
+    private String readFromChannel(SocketChannel socketChannel) {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         int bytesRead = 0;
+        String message = "";
         try {
             bytesRead = socketChannel.read(buffer);
         } catch (IOException e) {
@@ -124,21 +189,19 @@ public class IterServer {
 
         if (bytesRead == -1) {
             log("Connection closed.");
-            current.cancel();
+            try {
+                socketChannel.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         if (bytesRead > 0) {
             buffer.flip();
             byte[] data = new byte[buffer.remaining()];
             buffer.get(data);
-            String message = new String(data);
-            log("Received: " + message);
+            message = new String(data);
         }
-    }
-
-    private void log(String message) {
-        logger.println(
-                String.format("%d || %s", lineCounter++, message)
-        );
+        return message;
     }
 
     public static void main(String[] args) {

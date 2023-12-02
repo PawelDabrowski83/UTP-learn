@@ -13,6 +13,7 @@ public class IterClient extends Thread {
     private int lineCounter;
     private PrintWriter logger;
     private String filename = "IterClient" + getName() + ".txt";
+    private String lastReceived;
 
     public IterClient(String host, int port) {
         this.host = host;
