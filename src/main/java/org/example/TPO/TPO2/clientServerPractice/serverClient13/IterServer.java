@@ -84,9 +84,9 @@ public class IterServer {
                         readRequest(current);
                         continue;
                     }
-//                    if (current.isWritable()) {
-//                        sendResponse(current);
-//                    }
+                    if (current.isWritable()) {
+                        sendResponse(current);
+                    }
                 }
             }
         }
@@ -112,30 +112,26 @@ public class IterServer {
 
     private void readRequest(SelectionKey current) {
         log("Reading...");
-        try (SocketChannel socketChannel = (SocketChannel) current.channel()) {
-            ByteBuffer buffer = ByteBuffer.allocate(1024);
-            int bytesRead = 0;
-            try {
-                bytesRead = socketChannel.read(buffer);
-            } catch (IOException e) {
-                e.printStackTrace();
-                log("Exception on reading from buffer.");
-            }
-
-            if (bytesRead == -1) {
-                log("Connection closed.");
-                current.cancel();
-            }
-            if (bytesRead > 0) {
-                buffer.flip();
-                byte[] data = new byte[buffer.remaining()];
-                buffer.get(data);
-                String message = new String(data);
-                log("Received: " + message);
-            }
+        SocketChannel socketChannel = (SocketChannel) current.channel();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        int bytesRead = 0;
+        try {
+            bytesRead = socketChannel.read(buffer);
         } catch (IOException e) {
             e.printStackTrace();
-            log("Exception on retrieving channel.");
+            log("Exception on reading from buffer.");
+        }
+
+        if (bytesRead == -1) {
+            log("Connection closed.");
+            current.cancel();
+        }
+        if (bytesRead > 0) {
+            buffer.flip();
+            byte[] data = new byte[buffer.remaining()];
+            buffer.get(data);
+            String message = new String(data);
+            log("Received: " + message);
         }
     }
 
