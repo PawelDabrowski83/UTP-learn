@@ -52,7 +52,6 @@ public class IterClient extends Thread {
                  Selector selector = Selector.open();
             ) {
                 socketChannel.socket().setSoTimeout(8000);
-//                socketChannel.register(selector, SelectionKey.OP_WRITE);
                 operate(socketChannel);
 
             } catch (IOException e) {
@@ -71,6 +70,11 @@ public class IterClient extends Thread {
 
         int step = 0;
         while (true) {
+            try {
+                Thread.sleep(ThreadLocalRandom.current().nextInt(500, 2500));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             String request = "";
         try {
             request = problems.get(step++);
@@ -100,7 +104,7 @@ public class IterClient extends Thread {
     }
 
     private void sendRequest(SocketChannel socketChannel, String message) {
-        message = message + System.lineSeparator();
+        //message = message + System.lineSeparator();
         ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
         try {
             log("Writing: " + message);

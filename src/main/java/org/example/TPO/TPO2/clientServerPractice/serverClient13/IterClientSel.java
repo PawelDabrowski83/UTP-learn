@@ -147,6 +147,10 @@ public class IterClientSel extends Thread {
         return response;
     }
 
+    private void sendRequest(SelectionKey current) {
+
+    }
+
     private void log(String message) {
         logger.println(
                 String.format("%d || %s", lineCounter++, message)

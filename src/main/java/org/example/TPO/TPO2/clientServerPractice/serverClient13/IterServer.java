@@ -166,7 +166,7 @@ public class IterServer {
         if ("STOPPING".equals(response)) {
             isEnding = true;
         }
-        response = response + System.lineSeparator();
+//        response = response + System.lineSeparator();
         ByteBuffer buffer = ByteBuffer.wrap(response.getBytes());
         try {
             socketChannel.write(buffer);
