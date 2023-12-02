@@ -14,14 +14,15 @@ import java.util.List;
 import java.util.Set;
 
 public class IterClientSel extends Thread {
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
     private int lineCounter = 0;
-    private String filename = getClass().getSimpleName() + getName() + "Log.txt";
+    private final String filename = getClass().getSimpleName() + getName() + "Log.txt";
     private PrintWriter logger;
     private Selector selector;
-    private List<String> problems;
-    private List<String> answers = new ArrayList<>();
+    private final List<String> problems;
+    private final List<String> answers = new ArrayList<>();
+    private int stepToWrite = 0;
 
     public IterClientSel(String host, int port) {
         this.host = host;
@@ -39,7 +40,7 @@ public class IterClientSel extends Thread {
                 selector = Selector.open();
 
                 socketChannel.configureBlocking(false);
-                socketChannel.socket().bind(new InetSocketAddress(IterServer.HOST, IterServer.PORT));
+                socketChannel.socket().bind(new InetSocketAddress(host, port));
                 socketChannel.socket().setSoTimeout(5000);
                 socketChannel.register(selector, SelectionKey.OP_CONNECT);
                 operate();
@@ -61,7 +62,7 @@ public class IterClientSel extends Thread {
         while(true) {
             int readyChannels;
             try {
-                readyChannels = selector.select();
+                readyChannels = selector.select(5000);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -111,9 +112,28 @@ public class IterClientSel extends Thread {
     }
 
     private void readResponse(SelectionKey current) {
+        boolean isClosing = false;
         SocketChannel socketChannel = (SocketChannel) current.channel();
         String response = readFrom(socketChannel);
         log("Received: " + response);
+        answers.add(response);
+
+
+        if ("STOPPING".equals(response)) {
+            isClosing = true;
+        }
+
+        if (isClosing) {
+            current.cancel();
+            try {
+                socketChannel.close();
+            } catch (IOException e) {
+                log("Exception on closing channel.");
+                e.printStackTrace();
+            }
+        } else {
+            current.interestOps(SelectionKey.OP_WRITE);
+        }
     }
 
     private String readFrom(SocketChannel socketChannel) {
@@ -148,12 +168,49 @@ public class IterClientSel extends Thread {
     }
 
     private void sendRequest(SelectionKey current) {
+        SocketChannel socketChannel = (SocketChannel) current.channel();
 
+        String request = prepareRequest();
+        if (request == null) {
+            current.cancel();
+            try {
+                log("Closing channel.");
+                socketChannel.close();
+                return;
+            } catch (IOException e) {
+                logException("closing channel");
+                e.printStackTrace();
+            }
+        } else {
+            ByteBuffer buffer = ByteBuffer.wrap(request.getBytes());
+            try {
+                log("Writing: " + request);
+                socketChannel.write(buffer);
+            } catch (IOException e) {
+                logException("writing message");
+                e.printStackTrace();
+            }
+        }
+        current.interestOps(SelectionKey.OP_READ);
+    }
+
+    private String prepareRequest() {
+        String request = "";
+        try {
+            request = problems.get(stepToWrite++);
+        } catch (IndexOutOfBoundsException ignored) {
+            request = null;
+        }
+        return request;
     }
 
     private void log(String message) {
         logger.println(
                 String.format("%d || %s", lineCounter++, message)
         );
+    }
+
+    private void logException(String message) {
+        log("Exception on " + message + ".");
     }
 }
