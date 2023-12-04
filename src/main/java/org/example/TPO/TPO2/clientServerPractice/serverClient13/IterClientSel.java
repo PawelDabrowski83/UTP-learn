@@ -101,10 +101,7 @@ public class IterClientSel extends Thread {
             try {
                 log("Connecting.");
                 socketChannel.finishConnect();
-//                current.interestOps(SelectionKey.OP_WRITE);
-                socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-                sendRequest(current);
-                current.interestOps(SelectionKey.OP_READ);
+                current.interestOps(SelectionKey.OP_WRITE);
             } catch (IOException e) {
                 log("Exception on finishing connection.");
                 e.printStackTrace();
@@ -189,6 +186,7 @@ public class IterClientSel extends Thread {
             try {
                 log("Writing: " + request);
                 socketChannel.write(buffer);
+                socketChannel.shutdownOutput();
             } catch (IOException e) {
                 logException("writing message");
                 e.printStackTrace();
