@@ -172,7 +172,7 @@ public class IterServer {
         try {
             socketChannel.write(buffer);
             log("Writing: " + response);
-            socketChannel.shutdownOutput();
+            socketChannel.close();
         } catch (IOException e) {
             log("Error on write.");
             throw new RuntimeException(e);
