@@ -49,7 +49,6 @@ public class IterClient extends Thread {
             log("Starting client.");
 
             try (SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(host, port));
-                 Selector selector = Selector.open();
             ) {
                 socketChannel.socket().setSoTimeout(8000);
                 operate(socketChannel);
@@ -152,14 +151,14 @@ public class IterClient extends Thread {
     }
 
     public static void main(String[] args) {
-        int repeat = 10;
-        while (repeat-- > 0) {
+//        int repeat = 10;
+//        while (repeat-- > 0) {
 //            try {
 //                Thread.sleep(500);
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
             new IterClient(IterServer.HOST, IterServer.PORT).start();
-        }
+//        }
     }
 }

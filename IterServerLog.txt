@@ -1,0 +1,9 @@
+0 || Starting server.
+1 || Server operating.
+2 || Establishing connection.
+3 || Connection established - /127.0.0.1
+4 || Reading...
+5 || Received: HELLO
+6 || Sending response.
+7 || My response is: CONFIRM
+8 || Writing: CONFIRM

@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * The idea for project is to have a server which will receive a number and resond with number increased by one.
+ * The idea for project is to have a server which will receive a number and respond with number increased by one.
  * The communication will stop when the client sends message "STOP". First communication from the client is its name.
  * Both client and server are using nonblocking socket channels.
  */
@@ -103,7 +103,8 @@ public class IterServer {
         try {
             SocketChannel socketChannel = ssc.accept();
             socketChannel.configureBlocking(false);
-            socketChannel.register(sel, SelectionKey.OP_READ, SelectionKey.OP_WRITE);
+            socketChannel.register(sel, SelectionKey.OP_READ);
+            log("Connection established - " + socketChannel.socket().getLocalAddress());
 
         } catch (IOException e) {
             e.printStackTrace();
