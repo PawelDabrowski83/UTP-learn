@@ -57,7 +57,7 @@ public class IterServer {
 
             int readyChannels = 0;
             try {
-                readyChannels = sel.select(1000);
+                readyChannels = sel.select();
             } catch (IOException e) {
                 e.printStackTrace();
                 log("Exception on selecting keys.");
@@ -101,7 +101,7 @@ public class IterServer {
             SocketChannel socketChannel = ssc.accept();
             socketChannel.configureBlocking(false);
             socketChannel.register(sel, SelectionKey.OP_READ);
-            log("Connection established - " + socketChannel.socket().getLocalAddress());
+            log("Connection established - " + socketChannel.socket().getPort());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -165,12 +165,10 @@ public class IterServer {
         if ("STOPPING".equals(response)) {
             isEnding = true;
         }
-//        response = response + System.lineSeparator();
         ByteBuffer buffer = ByteBuffer.wrap(response.getBytes());
         try {
             socketChannel.write(buffer);
             log("Writing: " + response);
-//            socketChannel.close();
         } catch (IOException e) {
             log("Error on write.");
             throw new RuntimeException(e);
@@ -185,8 +183,9 @@ public class IterServer {
                 log("Exception on closing.");
                 e.printStackTrace();
             }
+        } else {
+            current.interestOps(SelectionKey.OP_READ);
         }
-        current.interestOps(SelectionKey.OP_READ);
 
     }
 

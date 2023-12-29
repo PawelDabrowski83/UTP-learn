@@ -1,30 +1,477 @@
 0 || Starting server.
 1 || Server operating.
 2 || Establishing connection.
-3 || Connection established - /127.0.0.1
-4 || Reading...
-5 || Received: HELLO
-6 || Sending response.
-7 || My response is: CONFIRM
-8 || Writing: CONFIRM
-9 || Reading...
-10 || Received: 117
-11 || Sending response.
-12 || My response is: 118
-13 || Writing: 118
-14 || Reading...
-15 || Received: -170
-16 || Sending response.
-17 || My response is: -169
-18 || Writing: -169
-19 || Reading...
-20 || Received: 96
-21 || Sending response.
-22 || My response is: 97
-23 || Writing: 97
+3 || Connection established - 57773
+4 || Establishing connection.
+5 || Connection established - 57775
+6 || Establishing connection.
+7 || Connection established - 57776
+8 || Establishing connection.
+9 || Connection established - 57777
+10 || Reading...
+11 || Received: HELLO
+12 || Sending response.
+13 || My response is: CONFIRM
+14 || Writing: CONFIRM
+15 || Establishing connection.
+16 || Connection established - 57778
+17 || Reading...
+18 || Received: HELLO
+19 || Sending response.
+20 || My response is: CONFIRM
+21 || Writing: CONFIRM
+22 || Establishing connection.
+23 || Connection established - 57779
 24 || Reading...
-25 || Received: STOP
+25 || Received: 0
 26 || Sending response.
-27 || My response is: STOPPING
-28 || Writing: STOPPING
-29 || Closing channel.
+27 || My response is: 1
+28 || Writing: 1
+29 || Reading...
+30 || Received: HELLO
+31 || Sending response.
+32 || My response is: CONFIRM
+33 || Writing: CONFIRM
+34 || Establishing connection.
+35 || Connection established - 57780
+36 || Reading...
+37 || Received: 4
+38 || Sending response.
+39 || My response is: 5
+40 || Writing: 5
+41 || Reading...
+42 || Received: HELLO
+43 || Sending response.
+44 || My response is: CONFIRM
+45 || Writing: CONFIRM
+46 || Establishing connection.
+47 || Connection established - 57781
+48 || Reading...
+49 || Received: 56
+50 || Sending response.
+51 || My response is: 57
+52 || Writing: 57
+53 || Reading...
+54 || Received: HELLO
+55 || Sending response.
+56 || My response is: CONFIRM
+57 || Writing: CONFIRM
+58 || Reading...
+59 || Received: -191
+60 || Sending response.
+61 || My response is: -190
+62 || Writing: -190
+63 || Reading...
+64 || Received: -150
+65 || Sending response.
+66 || My response is: -149
+67 || Writing: -149
+68 || Establishing connection.
+69 || Connection established - 57782
+70 || Reading...
+71 || Received: HELLO
+72 || Sending response.
+73 || My response is: CONFIRM
+74 || Writing: CONFIRM
+75 || Establishing connection.
+76 || Connection established - 57783
+77 || Reading...
+78 || Received: HELLO
+79 || Sending response.
+80 || My response is: CONFIRM
+81 || Writing: CONFIRM
+82 || Reading...
+83 || Received: 191
+84 || Sending response.
+85 || My response is: 192
+86 || Writing: 192
+87 || Reading...
+88 || Received: HELLO
+89 || Sending response.
+90 || My response is: CONFIRM
+91 || Writing: CONFIRM
+92 || Reading...
+93 || Received: 98
+94 || Sending response.
+95 || My response is: 99
+96 || Writing: 99
+97 || Reading...
+98 || Received: -136
+99 || Sending response.
+100 || My response is: -135
+101 || Writing: -135
+102 || Reading...
+103 || Received: HELLO
+104 || Sending response.
+105 || My response is: CONFIRM
+106 || Writing: CONFIRM
+107 || Reading...
+108 || Received: 49
+109 || Sending response.
+110 || My response is: 50
+111 || Writing: 50
+112 || Reading...
+113 || Received: -56
+114 || Sending response.
+115 || My response is: -55
+116 || Writing: -55
+117 || Reading...
+118 || Received: HELLO
+119 || Sending response.
+120 || My response is: CONFIRM
+121 || Writing: CONFIRM
+122 || Reading...
+123 || Received: 79
+124 || Sending response.
+125 || My response is: 80
+126 || Writing: 80
+127 || Reading...
+128 || Received: -105
+129 || Sending response.
+130 || My response is: -104
+131 || Writing: -104
+132 || Reading...
+133 || Received: 112
+134 || Sending response.
+135 || My response is: 113
+136 || Writing: 113
+137 || Reading...
+138 || Received: 68
+139 || Sending response.
+140 || My response is: 69
+141 || Writing: 69
+142 || Reading...
+143 || Received: 156
+144 || Sending response.
+145 || My response is: 157
+146 || Writing: 157
+147 || Reading...
+148 || Received: -50
+149 || Sending response.
+150 || My response is: -49
+151 || Writing: -49
+152 || Reading...
+153 || Received: 121
+154 || Sending response.
+155 || My response is: 122
+156 || Writing: 122
+157 || Reading...
+158 || Received: 95
+159 || Sending response.
+160 || My response is: 96
+161 || Writing: 96
+162 || Reading...
+163 || Received: -19
+164 || Sending response.
+165 || My response is: -18
+166 || Writing: -18
+167 || Reading...
+168 || Received: 47
+169 || Sending response.
+170 || My response is: 48
+171 || Writing: 48
+172 || Reading...
+173 || Received: -149
+174 || Sending response.
+175 || My response is: -148
+176 || Writing: -148
+177 || Reading...
+178 || Received: -65
+179 || Sending response.
+180 || My response is: -64
+181 || Writing: -64
+182 || Reading...
+183 || Received: -82
+184 || Sending response.
+185 || My response is: -81
+186 || Writing: -81
+187 || Reading...
+188 || Received: 123
+189 || Sending response.
+190 || My response is: 124
+191 || Writing: 124
+192 || Reading...
+193 || Received: -43
+194 || Sending response.
+195 || My response is: -42
+196 || Writing: -42
+197 || Reading...
+198 || Received: -150
+199 || Sending response.
+200 || My response is: -149
+201 || Writing: -149
+202 || Reading...
+203 || Received: -21
+204 || Sending response.
+205 || My response is: -20
+206 || Writing: -20
+207 || Reading...
+208 || Received: 51
+209 || Sending response.
+210 || My response is: 52
+211 || Writing: 52
+212 || Reading...
+213 || Received: 34
+214 || Sending response.
+215 || My response is: 35
+216 || Writing: 35
+217 || Reading...
+218 || Received: 198
+219 || Sending response.
+220 || My response is: 199
+221 || Writing: 199
+222 || Reading...
+223 || Received: -182
+224 || Sending response.
+225 || My response is: -181
+226 || Writing: -181
+227 || Reading...
+228 || Received: -106
+229 || Sending response.
+230 || My response is: -105
+231 || Writing: -105
+232 || Reading...
+233 || Received: 66
+234 || Sending response.
+235 || My response is: 67
+236 || Writing: 67
+237 || Reading...
+238 || Received: -87
+239 || Sending response.
+240 || My response is: -86
+241 || Writing: -86
+242 || Reading...
+243 || Received: 28
+244 || Sending response.
+245 || My response is: 29
+246 || Writing: 29
+247 || Reading...
+248 || Received: -74
+249 || Sending response.
+250 || My response is: -73
+251 || Writing: -73
+252 || Reading...
+253 || Received: -105
+254 || Sending response.
+255 || My response is: -104
+256 || Writing: -104
+257 || Reading...
+258 || Received: 79
+259 || Sending response.
+260 || My response is: 80
+261 || Writing: 80
+262 || Reading...
+263 || Received: 85
+264 || Sending response.
+265 || My response is: 86
+266 || Writing: 86
+267 || Reading...
+268 || Received: -110
+269 || Sending response.
+270 || My response is: -109
+271 || Writing: -109
+272 || Reading...
+273 || Received: STOP
+274 || Sending response.
+275 || My response is: STOPPING
+276 || Writing: STOPPING
+277 || Closing channel.
+278 || Reading...
+279 || Received: 125
+280 || Sending response.
+281 || My response is: 126
+282 || Writing: 126
+283 || Reading...
+284 || Received: -10
+285 || Sending response.
+286 || My response is: -9
+287 || Writing: -9
+288 || Reading...
+289 || Received: -178
+290 || Sending response.
+291 || My response is: -177
+292 || Writing: -177
+293 || Reading...
+294 || Received: STOP
+295 || Sending response.
+296 || My response is: STOPPING
+297 || Writing: STOPPING
+298 || Closing channel.
+299 || Reading...
+300 || Received: -146
+301 || Sending response.
+302 || My response is: -145
+303 || Writing: -145
+304 || Reading...
+305 || Received: 85
+306 || Sending response.
+307 || My response is: 86
+308 || Writing: 86
+309 || Reading...
+310 || Received: -84
+311 || Sending response.
+312 || My response is: -83
+313 || Writing: -83
+314 || Reading...
+315 || Received: -196
+316 || Sending response.
+317 || My response is: -195
+318 || Writing: -195
+319 || Reading...
+320 || Received: -178
+321 || Sending response.
+322 || My response is: -177
+323 || Writing: -177
+324 || Reading...
+325 || Received: -13
+326 || Sending response.
+327 || My response is: -12
+328 || Writing: -12
+329 || Reading...
+330 || Received: STOP
+331 || Sending response.
+332 || My response is: STOPPING
+333 || Writing: STOPPING
+334 || Closing channel.
+335 || Reading...
+336 || Received: -151
+337 || Sending response.
+338 || My response is: -150
+339 || Writing: -150
+340 || Reading...
+341 || Received: -126
+342 || Sending response.
+343 || My response is: -125
+344 || Writing: -125
+345 || Reading...
+346 || Received: -134
+347 || Sending response.
+348 || My response is: -133
+349 || Writing: -133
+350 || Reading...
+351 || Received: 158
+352 || Sending response.
+353 || My response is: 159
+354 || Writing: 159
+355 || Reading...
+356 || Received: -89
+357 || Sending response.
+358 || My response is: -88
+359 || Writing: -88
+360 || Reading...
+361 || Received: 39
+362 || Sending response.
+363 || My response is: 40
+364 || Writing: 40
+365 || Reading...
+366 || Received: STOP
+367 || Sending response.
+368 || My response is: STOPPING
+369 || Writing: STOPPING
+370 || Closing channel.
+371 || Reading...
+372 || Received: STOP
+373 || Sending response.
+374 || My response is: STOPPING
+375 || Writing: STOPPING
+376 || Closing channel.
+377 || Reading...
+378 || Received: -123
+379 || Sending response.
+380 || My response is: -122
+381 || Writing: -122
+382 || Reading...
+383 || Received: 113
+384 || Sending response.
+385 || My response is: 114
+386 || Writing: 114
+387 || Reading...
+388 || Received: 0
+389 || Sending response.
+390 || My response is: 1
+391 || Writing: 1
+392 || Reading...
+393 || Received: STOP
+394 || Sending response.
+395 || My response is: STOPPING
+396 || Writing: STOPPING
+397 || Closing channel.
+398 || Reading...
+399 || Received: 111
+400 || Sending response.
+401 || My response is: 112
+402 || Writing: 112
+403 || Reading...
+404 || Received: -81
+405 || Sending response.
+406 || My response is: -80
+407 || Writing: -80
+408 || Reading...
+409 || Received: 68
+410 || Sending response.
+411 || My response is: 69
+412 || Writing: 69
+413 || Reading...
+414 || Received: 7
+415 || Sending response.
+416 || My response is: 8
+417 || Writing: 8
+418 || Reading...
+419 || Received: -157
+420 || Sending response.
+421 || My response is: -156
+422 || Writing: -156
+423 || Reading...
+424 || Received: 114
+425 || Sending response.
+426 || My response is: 115
+427 || Writing: 115
+428 || Reading...
+429 || Received: STOP
+430 || Sending response.
+431 || My response is: STOPPING
+432 || Writing: STOPPING
+433 || Closing channel.
+434 || Reading...
+435 || Received: 194
+436 || Sending response.
+437 || My response is: 195
+438 || Writing: 195
+439 || Reading...
+440 || Received: -75
+441 || Sending response.
+442 || My response is: -74
+443 || Writing: -74
+444 || Reading...
+445 || Received: STOP
+446 || Sending response.
+447 || My response is: STOPPING
+448 || Writing: STOPPING
+449 || Closing channel.
+450 || Reading...
+451 || Received: 34
+452 || Sending response.
+453 || My response is: 35
+454 || Writing: 35
+455 || Reading...
+456 || Received: 57
+457 || Sending response.
+458 || My response is: 58
+459 || Writing: 58
+460 || Reading...
+461 || Received: STOP
+462 || Sending response.
+463 || My response is: STOPPING
+464 || Writing: STOPPING
+465 || Closing channel.
+466 || Reading...
+467 || Received: 7
+468 || Sending response.
+469 || My response is: 8
+470 || Writing: 8
+471 || Reading...
+472 || Received: STOP
+473 || Sending response.
+474 || My response is: STOPPING
+475 || Writing: STOPPING
+476 || Closing channel.
