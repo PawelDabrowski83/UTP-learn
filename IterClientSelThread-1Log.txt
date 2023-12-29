@@ -1,0 +1,23 @@
+0 || Starting client.
+1 || Connecting.
+2 || Connected.
+3 || Request prepared: HELLO
+4 || Writing: HELLO
+5 || Exception on writing message.
+6 || Exception on reading buffer.
+7 || Received: 
+8 || Request prepared: 22
+9 || Writing: 22
+10 || Exception on writing message.
+11 || Exception on reading buffer.
+12 || Received: 
+13 || Request prepared: 108
+14 || Writing: 108
+15 || Exception on writing message.
+16 || Exception on reading buffer.
+17 || Received: 
+18 || Request prepared: 49
+19 || Writing: 49
+20 || Exception on writing message.
+21 || Exception on reading buffer.
+22 || Received: 

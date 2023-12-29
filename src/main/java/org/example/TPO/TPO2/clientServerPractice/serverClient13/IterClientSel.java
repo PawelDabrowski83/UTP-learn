@@ -11,7 +11,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class IterClientSel extends Thread {
     private final String host;
@@ -54,26 +54,32 @@ public class IterClientSel extends Thread {
             log("Exception on opening logger.");
             e.printStackTrace();
         }
-        super.run();
     }
 
     private void operate() {
-        while(true) {
-            int readyChannels;
+        while(!Thread.currentThread().isInterrupted()) {
+            try {
+                Thread.sleep(ThreadLocalRandom.current().nextInt(1000));
+            } catch (InterruptedException e) {
+                logException("interrupted while sleeping");
+            }
+
+            int readyChannels = 0;
             try {
                 readyChannels = selector.select();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                logException("on reading keys");
             }
+
             if (readyChannels == 0) {
                 continue;
             }
 
-            Set<SelectionKey> keys = selector.selectedKeys();
-            Iterator<SelectionKey> iterator = keys.iterator();
+            Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
 
             while (iterator.hasNext()) {
                 SelectionKey current = iterator.next();
+                iterator.remove();
 
                 if (current.isValid()) {
                     if (current.isConnectable()) {
@@ -90,7 +96,6 @@ public class IterClientSel extends Thread {
                     }
                 }
 
-                iterator.remove();
             }
         }
     }
@@ -101,9 +106,10 @@ public class IterClientSel extends Thread {
             try {
                 log("Connecting.");
                 socketChannel.finishConnect();
+                log("Connected.");
                 current.interestOps(SelectionKey.OP_WRITE);
             } catch (IOException e) {
-                log("Exception on finishing connection.");
+                logException("establishing connection");
                 e.printStackTrace();
                 current.cancel();
             }
@@ -111,25 +117,20 @@ public class IterClientSel extends Thread {
     }
 
     private void readResponse(SelectionKey current) {
-        boolean isClosing = false;
         SocketChannel socketChannel = (SocketChannel) current.channel();
         String response = readFrom(socketChannel);
         log("Received: " + response);
         answers.add(response);
 
-
         if ("STOPPING".equals(response)) {
-            isClosing = true;
-        }
-
-        if (isClosing) {
+            log("Stopping client");
             current.cancel();
-            try {
-                socketChannel.close();
-            } catch (IOException e) {
-                log("Exception on closing channel.");
-                e.printStackTrace();
-            }
+//            try {
+//                socketChannel.close();
+//            } catch (IOException e) {
+//                log("Exception on closing channel.");
+//                e.printStackTrace();
+//            }
         } else {
             current.interestOps(SelectionKey.OP_WRITE);
         }
@@ -143,18 +144,18 @@ public class IterClientSel extends Thread {
         try {
             bytesRead = socketChannel.read(buffer);
         } catch (IOException e) {
-            log("Exception on reading channel.");
+            logException("reading buffer");
             e.printStackTrace();
         }
 
         if (bytesRead == -1) {
             log("Connection closed.");
-            try {
-                socketChannel.close();
-            } catch (IOException e) {
-                log("Exception on closing channel.");
-                e.printStackTrace();
-            }
+//            try {
+//                socketChannel.close();
+//            } catch (IOException e) {
+//                logException("closing channel");
+//                e.printStackTrace();
+//            }
         }
 
         if (bytesRead > 0) {
@@ -176,7 +177,6 @@ public class IterClientSel extends Thread {
             try {
                 log("Closing channel.");
                 socketChannel.close();
-                return;
             } catch (IOException e) {
                 logException("closing channel");
                 e.printStackTrace();
@@ -191,8 +191,8 @@ public class IterClientSel extends Thread {
                 logException("writing message");
                 e.printStackTrace();
             }
+            current.interestOps(SelectionKey.OP_READ);
         }
-        current.interestOps(SelectionKey.OP_READ);
     }
 
     private String prepareRequest() {

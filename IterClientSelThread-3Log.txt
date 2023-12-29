@@ -1,0 +1,23 @@
+0 || Starting client.
+1 || Connecting.
+2 || Connected.
+3 || Request prepared: HELLO
+4 || Writing: HELLO
+5 || Received: CONFIRM
+6 || Request prepared: -28
+7 || Writing: -28
+8 || Exception on writing message.
+9 || Connection closed.
+10 || Received: 
+11 || Request prepared: 50
+12 || Writing: 50
+13 || Exception on writing message.
+14 || Connection closed.
+15 || Received: 
+16 || Request prepared: STOP
+17 || Writing: STOP
+18 || Exception on writing message.
+19 || Connection closed.
+20 || Received: 
+21 || Request prepared: null
+22 || Closing channel.

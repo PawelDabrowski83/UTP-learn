@@ -1,0 +1,20 @@
+0 || Starting server.
+1 || Server operating.
+2 || Establishing connection.
+3 || Connection established - 59666
+4 || Establishing connection.
+5 || Connection established - 59662
+6 || Establishing connection.
+7 || Connection established - 59664
+8 || Establishing connection.
+9 || Connection established - 59663
+10 || Establishing connection.
+11 || Connection established - 59665
+12 || Reading...
+13 || Received: HELLO
+14 || Sending response.
+15 || My response is: CONFIRM
+16 || Writing: CONFIRM
+17 || Reading...
+18 || Connection closed.
+19 || Received: 
