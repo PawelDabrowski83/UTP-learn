@@ -44,7 +44,7 @@ public class IterClient extends Thread {
 
     @Override
     public void run() {
-        try (PrintWriter writerToFile = new PrintWriter(new FileWriter(filename))) {
+        try (PrintWriter writerToFile = new PrintWriter(new FileWriter(filename), true)) {
             logger = writerToFile;
             log("Starting client.");
 
@@ -103,7 +103,6 @@ public class IterClient extends Thread {
     }
 
     private void sendRequest(SocketChannel socketChannel, String message) {
-        //message = message + System.lineSeparator();
         ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
         try {
             log("Writing: " + message);
@@ -121,7 +120,7 @@ public class IterClient extends Thread {
         try {
             readBytes = socketChannel.read(buffer);
         } catch (IOException e) {
-            log("Exception on reading socket.");
+            log("Empty read.");
             e.printStackTrace();
         }
         if (readBytes == -1) {

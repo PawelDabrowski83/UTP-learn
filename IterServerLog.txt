@@ -7,3 +7,24 @@
 6 || Sending response.
 7 || My response is: CONFIRM
 8 || Writing: CONFIRM
+9 || Reading...
+10 || Received: 117
+11 || Sending response.
+12 || My response is: 118
+13 || Writing: 118
+14 || Reading...
+15 || Received: -170
+16 || Sending response.
+17 || My response is: -169
+18 || Writing: -169
+19 || Reading...
+20 || Received: 96
+21 || Sending response.
+22 || My response is: 97
+23 || Writing: 97
+24 || Reading...
+25 || Received: STOP
+26 || Sending response.
+27 || My response is: STOPPING
+28 || Writing: STOPPING
+29 || Closing channel.

@@ -1,12 +1,9 @@
 package org.example.TPO.TPO2.clientServerPractice.serverClient13;
 
-import org.example.TPO.TPO2.clientServerPractice.serverclient1.Server;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
-import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -24,12 +21,12 @@ public class IterServer {
     public static final String HOST = "localhost";
     public static final int PORT = 65432;
     private int lineCounter = 0;
-    private final String filename = "IterServerLog.txt";
     private PrintWriter logger;
     private ServerSocketChannel ssc;
     private Selector sel;
 
     public IterServer() {
+        String filename = getClass().getSimpleName() + "Log.txt";
         try (PrintWriter writeToFile = new PrintWriter(new FileWriter(filename), true)) {
             logger = writeToFile;
             log("Starting server.");
@@ -60,7 +57,7 @@ public class IterServer {
 
             int readyChannels = 0;
             try {
-                readyChannels = sel.select();
+                readyChannels = sel.select(1000);
             } catch (IOException e) {
                 e.printStackTrace();
                 log("Exception on selecting keys.");
@@ -173,7 +170,7 @@ public class IterServer {
         try {
             socketChannel.write(buffer);
             log("Writing: " + response);
-            socketChannel.close();
+//            socketChannel.close();
         } catch (IOException e) {
             log("Error on write.");
             throw new RuntimeException(e);
