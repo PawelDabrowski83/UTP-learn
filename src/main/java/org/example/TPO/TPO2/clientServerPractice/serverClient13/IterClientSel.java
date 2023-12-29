@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +51,7 @@ public class IterClientSel extends Thread {
                 log("Exception on opening or closing channel.");
                 e.printStackTrace();
             }
+            log("Client closed - " + LocalDateTime.now());
         } catch (IOException e) {
             log("Exception on opening logger.");
             e.printStackTrace();
@@ -125,12 +127,13 @@ public class IterClientSel extends Thread {
         if ("STOPPING".equals(response)) {
             log("Stopping client");
             current.cancel();
-//            try {
-//                socketChannel.close();
-//            } catch (IOException e) {
-//                log("Exception on closing channel.");
-//                e.printStackTrace();
-//            }
+            Thread.currentThread().interrupt();
+            try {
+                socketChannel.close();
+            } catch (IOException e) {
+                log("Exception on closing channel.");
+                e.printStackTrace();
+            }
         } else {
             current.interestOps(SelectionKey.OP_WRITE);
         }
@@ -150,12 +153,12 @@ public class IterClientSel extends Thread {
 
         if (bytesRead == -1) {
             log("Connection closed.");
-//            try {
-//                socketChannel.close();
-//            } catch (IOException e) {
-//                logException("closing channel");
-//                e.printStackTrace();
-//            }
+            try {
+                socketChannel.close();
+            } catch (IOException e) {
+                logException("closing channel");
+                e.printStackTrace();
+            }
         }
 
         if (bytesRead > 0) {
@@ -186,7 +189,6 @@ public class IterClientSel extends Thread {
             try {
                 log("Writing: " + request);
                 socketChannel.write(buffer);
-                socketChannel.shutdownOutput();
             } catch (IOException e) {
                 logException("writing message");
                 e.printStackTrace();
