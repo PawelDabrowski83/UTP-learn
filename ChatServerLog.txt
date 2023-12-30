@@ -1,3 +1,8 @@
 0 || Starting server.
 1 || Searching for connections
 2 || Opening connection with client
+3 || Reading request.
+4 || Received: [Urma]: Hej 1
+
+5 || Start broadcasting: [Urma]: Hej 1
+

@@ -1,3 +1,4 @@
 0 || Starting client.
 1 || Connecting...
 2 || Connected.
+3 || Opening listening channel.

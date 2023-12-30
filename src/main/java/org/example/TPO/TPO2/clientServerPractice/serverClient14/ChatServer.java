@@ -88,11 +88,12 @@ public class ChatServer implements Runnable {
 
     private void acceptConnection(SelectionKey current) {
         log("Opening connection with client");
-        ServerSocketChannel channel = (ServerSocketChannel) current.channel();
+        ServerSocketChannel serverSocketChannel = (ServerSocketChannel) current.channel();
         try {
-            channel.accept();
+            SocketChannel channel = serverSocketChannel.accept();
             channel.configureBlocking(false);
             channel.register(selector, SelectionKey.OP_READ);
+            current.cancel();
         } catch (IOException e) {
             log("Exception on creating connection." + e.getMessage());
         }
@@ -100,16 +101,13 @@ public class ChatServer implements Runnable {
 
     private void readRequest(SelectionKey current) {
         log("Reading request.");
-        Thread readingThread = new Thread(() -> {
-            SocketChannel channel = (SocketChannel) current.channel();
-            String request = "";
-            request = readFromChannel(channel);
-            log("Received: " + request);
-            String response = request;
-            current.attach(response);
-            broadcastResponse(current);
-        });
-        readingThread.start();
+        SocketChannel channel = (SocketChannel) current.channel();
+        String request = "";
+        request = readFromChannel(channel);
+        log("Received: " + request);
+        String response = request;
+        current.attach(response);
+        broadcastResponse(current);
     }
 
     private String readFromChannel(SocketChannel channel) {
@@ -141,6 +139,7 @@ public class ChatServer implements Runnable {
 
     private void broadcastResponse(SelectionKey current) {
         String message = (String) current.attachment();
+        log("Start broadcasting: " + message);
         for (SelectionKey key : selector.selectedKeys()) {
             if (key.isValid() && key.isReadable()) {
                 SocketChannel channel = (SocketChannel) key.channel();
