@@ -8,6 +8,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class ChatClient implements Runnable {
     private String host;
@@ -72,19 +74,56 @@ public class ChatClient implements Runnable {
                 SelectionKey current = iterator.next();
                 iterator.remove();
 
-//                if (current.isValid()) {
-//                    if (current.isConnectable()) {
-//                        connect(current);
-//                    }
-//                    if (current.isReadable()) {
-//                        readResponse(current);
-//                    }
-//                    if (current.isWritable()) {
-//                        sendRequest(current);
-//                    }
-//                }
+                if (current.isValid()) {
+                    if (current.isConnectable()) {
+                        connect(current);
+                        continue;
+                    }
+                    if (current.isReadable()) {
+                        readResponse(current);
+                        continue;
+                    }
+                    if (current.isWritable()) {
+                        sendRequest(current);
+                        continue;
+                    }
+                }
             }
         }
+    }
+
+    public void connect(SelectionKey current) {
+        SocketChannel channel = (SocketChannel) current.channel();
+        if (channel.isConnectionPending()) {
+            try {
+                log("Connecting...");
+                channel.finishConnect();
+                log("Connected.");
+                channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+            } catch (IOException e) {
+                logException("on establishing connection");
+                e.printStackTrace();
+                current.cancel();
+            }
+        }
+    }
+
+    public void sendRequest(SelectionKey current) {
+        SocketChannel channel = (SocketChannel) current.channel();
+        Scanner scanner = new Scanner(System.in);
+        String message = "";
+        String username = null;
+        while (!Thread.currentThread().isInterrupted() && !"quit".equals(message.toLowerCase(Locale.ROOT))) {
+            if (username == null) {
+                System.out.println("Please enter your user name: ");
+                username = scanner.nextLine();
+            }
+            System.out.printf("[%s]: ", username);
+            message = scanner.nextLine();
+            current.attach(message);
+            current.interestOps(SelectionKey.OP_WRITE);
+        }
+        System.out.println("");
     }
 
     private void log(String message) {

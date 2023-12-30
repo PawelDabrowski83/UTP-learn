@@ -12,7 +12,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ChatServer {
+public class ChatServer implements Runnable {
 
     public static final String HOST = "localhost";
     public static final int PORT = 65432;
@@ -26,7 +26,8 @@ public class ChatServer {
 
     }
 
-    public void operate() {
+    @Override
+    public void run() {
         try (PrintWriter writeToFile = new PrintWriter(new FileWriter(filename), true)) {
             logger = writeToFile;
             runServer();
@@ -55,7 +56,7 @@ public class ChatServer {
 
     private void searchForConnections() {
         log("Searching for connections");
-        while (serverSocketChannel.isOpen()) {
+        while (serverSocketChannel.isOpen() && !Thread.currentThread().isInterrupted()) {
             int readyChannels = 0;
             try {
                 readyChannels = selector.select();
@@ -66,8 +67,8 @@ public class ChatServer {
                 continue;
             }
 
-            Set<SelectionKey> keySet = selector.selectedKeys();
-            Iterator<SelectionKey> iterator = keySet.iterator();
+            Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
+
             while (iterator.hasNext()) {
                 SelectionKey current = iterator.next();
                 if (current.isValid()) {
@@ -83,8 +84,8 @@ public class ChatServer {
                         broadcastResponse(current);
                         continue;
                     }
-                    iterator.remove();
                 }
+                iterator.remove();
             }
         }
     }
@@ -94,7 +95,7 @@ public class ChatServer {
         ServerSocketChannel channel = (ServerSocketChannel) current.channel();
         try {
             channel.configureBlocking(false);
-            channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
+            channel.register(selector, SelectionKey.OP_READ);
         } catch (IOException e) {
             log("Exception on creating connection." + e.getMessage());
         }
@@ -107,8 +108,7 @@ public class ChatServer {
         request = readFromChannel(channel);
         log("Received: " + request);
 
-        String response = ((SocketChannel) current.channel()).socket().getLocalAddress().getCanonicalHostName() +
-                " " + request;
+        String response = request;
         current.attach(response);
         current.interestOps(SelectionKey.OP_WRITE);
     }
@@ -142,7 +142,6 @@ public class ChatServer {
 
     private void broadcastResponse(SelectionKey current) {
         String message = (String) current.attachment();
-        message = message + '\n';
         for (SelectionKey key : selector.selectedKeys()) {
             if (key.isValid() && key.isReadable()) {
                 SocketChannel channel = (SocketChannel) key.channel();
@@ -169,6 +168,11 @@ public class ChatServer {
             e.printStackTrace();
             log("Exception on closing channel.");
         }
+    }
+
+    public static void main(String[] args) {
+        Thread chatServer = new Thread(new ChatServer());
+        chatServer.start();
     }
 }
 
