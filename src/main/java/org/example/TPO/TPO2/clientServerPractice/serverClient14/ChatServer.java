@@ -108,6 +108,7 @@ public class ChatServer implements Runnable {
         String response = request;
         current.attach(response);
         broadcastResponse(current);
+        current.interestOps(SelectionKey.OP_READ);
     }
 
     private String readFromChannel(SocketChannel channel) {
