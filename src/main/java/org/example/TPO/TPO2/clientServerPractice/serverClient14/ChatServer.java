@@ -103,14 +103,16 @@ public class ChatServer implements Runnable {
 
     private void readRequest(SelectionKey current) {
         log("Reading request.");
-        SocketChannel channel = (SocketChannel) current.channel();
-        String request = "";
-        request = readFromChannel(channel);
-        log("Received: " + request);
-
-        String response = request;
-        current.attach(response);
-        current.interestOps(SelectionKey.OP_WRITE);
+        Thread readingThread = new Thread(() -> {
+            SocketChannel channel = (SocketChannel) current.channel();
+            String request = "";
+            request = readFromChannel(channel);
+            log("Received: " + request);
+            String response = request;
+            current.attach(response);
+            current.interestOps(SelectionKey.OP_WRITE);
+        });
+        readingThread.start();
     }
 
     private String readFromChannel(SocketChannel channel) {

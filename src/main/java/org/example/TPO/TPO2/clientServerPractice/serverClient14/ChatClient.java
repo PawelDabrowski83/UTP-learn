@@ -16,6 +16,7 @@ public class ChatClient implements Runnable {
     private int lineCounter = 0;
     private SocketChannel channel;
     private String username;
+    private Scanner scanner;
 
     public ChatClient(String host, int port) {
         this.host = host;
@@ -47,10 +48,11 @@ public class ChatClient implements Runnable {
 
     private void operate() {
         establishConnection();
-//        username = askForUsername();
-        username = "Bob";
+        scanner = new Scanner(System.in);
+        username = askForUsername();
         openListeningChannel();
         openUserConsole();
+        scanner.close();
     }
 
     private void establishConnection() {
@@ -68,9 +70,7 @@ public class ChatClient implements Runnable {
 
     private String askForUsername() {
         System.out.println("Please enter your username: ");
-        try (Scanner scanner = new Scanner(System.in)) {
-            return scanner.nextLine();
-        }
+        return scanner.nextLine();
     }
 
     private void openListeningChannel() {
@@ -110,13 +110,11 @@ public class ChatClient implements Runnable {
     }
 
     private void openUserConsole() {
-        try (Scanner scanner = new Scanner(System.in)) {
-            String message = "";
-            while (!Thread.currentThread().isInterrupted() && !"quit".equalsIgnoreCase(message)) {
-                System.out.printf("[%s]: ", username);
-                message = scanner.nextLine();
-                sendRequest(message);
-            }
+        String message = "";
+        while (!Thread.currentThread().isInterrupted() && !"quit".equalsIgnoreCase(message)) {
+            System.out.printf("[%s]: ", username);
+            message = scanner.nextLine();
+            sendRequest(message);
         }
 
     }
@@ -127,6 +125,7 @@ public class ChatClient implements Runnable {
             channel.write(ByteBuffer.wrap(message.getBytes()));
         } catch (IOException e) {
             logException("writing request to server");
+            e.printStackTrace();
         }
     }
 

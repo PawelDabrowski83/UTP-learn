@@ -3,6 +3,3 @@
 2 || Connected.
 3 || Opening listening channel.
 4 || Exception on writing request to server.
-5 || Exception on writing request to server.
-6 || Exception on writing request to server.
-7 || Exception on writing request to server.
