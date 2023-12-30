@@ -80,10 +80,6 @@ public class ChatServer implements Runnable {
                         readRequest(current);
                         continue;
                     }
-                    if (current.isWritable()) {
-                        broadcastResponse(current);
-                        continue;
-                    }
                 }
                 iterator.remove();
             }
@@ -94,6 +90,7 @@ public class ChatServer implements Runnable {
         log("Opening connection with client");
         ServerSocketChannel channel = (ServerSocketChannel) current.channel();
         try {
+            channel.accept();
             channel.configureBlocking(false);
             channel.register(selector, SelectionKey.OP_READ);
         } catch (IOException e) {
@@ -110,7 +107,7 @@ public class ChatServer implements Runnable {
             log("Received: " + request);
             String response = request;
             current.attach(response);
-            current.interestOps(SelectionKey.OP_WRITE);
+            broadcastResponse(current);
         });
         readingThread.start();
     }

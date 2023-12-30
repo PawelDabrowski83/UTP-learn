@@ -1,5 +1,3 @@
 0 || Starting client.
 1 || Connecting...
 2 || Connected.
-3 || Opening listening channel.
-4 || Exception on writing request to server.
