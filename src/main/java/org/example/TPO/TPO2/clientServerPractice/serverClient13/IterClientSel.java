@@ -126,7 +126,6 @@ public class IterClientSel extends Thread {
 
         if ("STOPPING".equals(response)) {
             log("Stopping client");
-            current.cancel();
             Thread.currentThread().interrupt();
             try {
                 socketChannel.close();
@@ -134,6 +133,7 @@ public class IterClientSel extends Thread {
                 log("Exception on closing channel.");
                 e.printStackTrace();
             }
+            current.cancel();
         } else {
             current.interestOps(SelectionKey.OP_WRITE);
         }

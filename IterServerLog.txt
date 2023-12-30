@@ -1,0 +1,352 @@
+0 || Starting server.
+1 || Server operating.
+2 || Loop: 00 false
+3 || Establishing connection.
+4 || Connection established - 60270
+5 || Loop: 12 false
+6 || Establishing connection.
+7 || Connection established - 60269
+8 || Loop: 20 false
+9 || Establishing connection.
+10 || Connection established - 60272
+11 || Loop: 31 false
+12 || Establishing connection.
+13 || Connection established - 60271
+14 || Loop: 40 false
+15 || Establishing connection.
+16 || Connection established - 60273
+17 || Loop: 51 false
+18 || Reading...
+19 || Received: HELLO
+20 || Loop: 61 false
+21 || Sending response.
+22 || My response is: CONFIRM
+23 || Writing: CONFIRM
+24 || Loop: 75 false
+25 || Reading...
+26 || Received: HELLO
+27 || Loop: 81 false
+28 || Sending response.
+29 || My response is: CONFIRM
+30 || Writing: CONFIRM
+31 || Loop: 90 false
+32 || Reading...
+33 || Received: HELLO
+34 || Loop: 101 false
+35 || Sending response.
+36 || My response is: CONFIRM
+37 || Writing: CONFIRM
+38 || Loop: 110 false
+39 || Reading...
+40 || Received: HELLO
+41 || Loop: 121 false
+42 || Sending response.
+43 || My response is: CONFIRM
+44 || Writing: CONFIRM
+45 || Loop: 131 false
+46 || Reading...
+47 || Received: -176
+48 || Loop: 141 false
+49 || Sending response.
+50 || My response is: -175
+51 || Writing: -175
+52 || Loop: 150 false
+53 || Reading...
+54 || Received: 103
+55 || Loop: 160 false
+56 || Sending response.
+57 || My response is: 104
+58 || Writing: 104
+59 || Loop: 170 false
+60 || Reading...
+61 || Received: HELLO
+62 || Loop: 181 false
+63 || Sending response.
+64 || My response is: CONFIRM
+65 || Writing: CONFIRM
+66 || Loop: 190 false
+67 || Reading...
+68 || Received: -180
+69 || Loop: 201 false
+70 || Sending response.
+71 || My response is: -179
+72 || Writing: -179
+73 || Loop: 210 false
+74 || Reading...
+75 || Received: 28
+76 || Loop: 220 false
+77 || Sending response.
+78 || My response is: 29
+79 || Writing: 29
+80 || Loop: 230 false
+81 || Reading...
+82 || Received: -72
+83 || Loop: 240 false
+84 || Sending response.
+85 || My response is: -71
+86 || Writing: -71
+87 || Loop: 251 false
+88 || Reading...
+89 || Received: 23
+90 || Loop: 260 false
+91 || Sending response.
+92 || My response is: 24
+93 || Writing: 24
+94 || Loop: 271 false
+95 || Reading...
+96 || Received: 156
+97 || Loop: 281 false
+98 || Sending response.
+99 || My response is: 157
+100 || Writing: 157
+101 || Loop: 290 false
+102 || Reading...
+103 || Received: -186
+104 || Loop: 300 false
+105 || Sending response.
+106 || My response is: -185
+107 || Writing: -185
+108 || Loop: 311 false
+109 || Reading...
+110 || Received: -9
+111 || Loop: 320 false
+112 || Sending response.
+113 || My response is: -8
+114 || Writing: -8
+115 || Loop: 330 false
+116 || Reading...
+117 || Received: 101
+118 || Loop: 340 false
+119 || Sending response.
+120 || My response is: 102
+121 || Writing: 102
+122 || Loop: 351 false
+123 || Reading...
+124 || Received: 103
+125 || Loop: 361 false
+126 || Sending response.
+127 || My response is: 104
+128 || Writing: 104
+129 || Loop: 370 false
+130 || Reading...
+131 || Received: 85
+132 || Loop: 381 false
+133 || Sending response.
+134 || My response is: 86
+135 || Writing: 86
+136 || Loop: 390 false
+137 || Reading...
+138 || Received: 105
+139 || Loop: 400 false
+140 || Sending response.
+141 || My response is: 106
+142 || Writing: 106
+143 || Loop: 410 false
+144 || Reading...
+145 || Received: 45
+146 || Loop: 420 false
+147 || Sending response.
+148 || My response is: 46
+149 || Writing: 46
+150 || Loop: 430 false
+151 || Reading...
+152 || Received: -155
+153 || Loop: 440 false
+154 || Sending response.
+155 || My response is: -154
+156 || Writing: -154
+157 || Loop: 451 false
+158 || Reading...
+159 || Received: -69
+160 || Loop: 460 false
+161 || Sending response.
+162 || My response is: -68
+163 || Writing: -68
+164 || Loop: 470 false
+165 || Reading...
+166 || Received: 23
+167 || Loop: 480 false
+168 || Sending response.
+169 || My response is: 24
+170 || Writing: 24
+171 || Loop: 490 false
+172 || Reading...
+173 || Received: 51
+174 || Loop: 501 false
+175 || Sending response.
+176 || My response is: 52
+177 || Writing: 52
+178 || Loop: 510 false
+179 || Reading...
+180 || Received: 179
+181 || Loop: 520 false
+182 || Sending response.
+183 || My response is: 180
+184 || Writing: 180
+185 || Loop: 530 false
+186 || Reading...
+187 || Received: -122
+188 || Loop: 540 false
+189 || Sending response.
+190 || My response is: -121
+191 || Writing: -121
+192 || Loop: 550 false
+193 || Reading...
+194 || Received: 190
+195 || Loop: 561 false
+196 || Sending response.
+197 || My response is: 191
+198 || Writing: 191
+199 || Loop: 570 false
+200 || Reading...
+201 || Received: 89
+202 || Loop: 580 false
+203 || Sending response.
+204 || My response is: 90
+205 || Writing: 90
+206 || Loop: 590 false
+207 || Reading...
+208 || Received: 41
+209 || Loop: 600 false
+210 || Sending response.
+211 || My response is: 42
+212 || Writing: 42
+213 || Loop: 610 false
+214 || Reading...
+215 || Received: 35
+216 || Loop: 620 false
+217 || Sending response.
+218 || My response is: 36
+219 || Writing: 36
+220 || Loop: 631 false
+221 || Reading...
+222 || Received: STOP
+223 || Loop: 641 false
+224 || Sending response.
+225 || My response is: STOPPING
+226 || Writing: STOPPING
+227 || Closing channel.
+228 || Loop: 651 false
+229 || Reading...
+230 || Received: 196
+231 || Loop: 660 false
+232 || Sending response.
+233 || My response is: 197
+234 || Writing: 197
+235 || Loop: 670 false
+236 || Reading...
+237 || Received: 34
+238 || Loop: 680 false
+239 || Sending response.
+240 || My response is: 35
+241 || Writing: 35
+242 || Loop: 691 false
+243 || Reading...
+244 || Received: 34
+245 || Loop: 701 false
+246 || Sending response.
+247 || My response is: 35
+248 || Writing: 35
+249 || Loop: 710 false
+250 || Reading...
+251 || Received: 13
+252 || Loop: 721 false
+253 || Sending response.
+254 || My response is: 14
+255 || Writing: 14
+256 || Loop: 730 false
+257 || Reading...
+258 || Received: -161
+259 || Loop: 740 false
+260 || Sending response.
+261 || My response is: -160
+262 || Writing: -160
+263 || Loop: 751 false
+264 || Reading...
+265 || Received: 26
+266 || Loop: 761 false
+267 || Sending response.
+268 || My response is: 27
+269 || Writing: 27
+270 || Loop: 770 false
+271 || Reading...
+272 || Received: STOP
+273 || Loop: 780 false
+274 || Sending response.
+275 || My response is: STOPPING
+276 || Writing: STOPPING
+277 || Closing channel.
+278 || Loop: 791 false
+279 || Reading...
+280 || Received: -81
+281 || Loop: 800 false
+282 || Sending response.
+283 || My response is: -80
+284 || Writing: -80
+285 || Loop: 810 false
+286 || Reading...
+287 || Received: -103
+288 || Loop: 820 false
+289 || Sending response.
+290 || My response is: -102
+291 || Writing: -102
+292 || Loop: 831 false
+293 || Reading...
+294 || Received: -94
+295 || Loop: 840 false
+296 || Sending response.
+297 || My response is: -93
+298 || Writing: -93
+299 || Loop: 851 false
+300 || Reading...
+301 || Received: STOP
+302 || Loop: 860 false
+303 || Sending response.
+304 || My response is: STOPPING
+305 || Writing: STOPPING
+306 || Closing channel.
+307 || Loop: 871 false
+308 || Reading...
+309 || Received: 128
+310 || Loop: 880 false
+311 || Sending response.
+312 || My response is: 129
+313 || Writing: 129
+314 || Loop: 890 false
+315 || Reading...
+316 || Received: STOP
+317 || Loop: 900 false
+318 || Sending response.
+319 || My response is: STOPPING
+320 || Writing: STOPPING
+321 || Closing channel.
+322 || Loop: 911 false
+323 || Reading...
+324 || Received: -54
+325 || Loop: 920 false
+326 || Sending response.
+327 || My response is: -53
+328 || Writing: -53
+329 || Loop: 931 false
+330 || Reading...
+331 || Received: 125
+332 || Loop: 940 false
+333 || Sending response.
+334 || My response is: 126
+335 || Writing: 126
+336 || Loop: 951 false
+337 || Reading...
+338 || Received: 32
+339 || Loop: 960 false
+340 || Sending response.
+341 || My response is: 33
+342 || Writing: 33
+343 || Loop: 971 false
+344 || Reading...
+345 || Received: STOP
+346 || Loop: 980 false
+347 || Sending response.
+348 || My response is: STOPPING
+349 || Writing: STOPPING
+350 || Closing channel.
+351 || Loop: 990 false

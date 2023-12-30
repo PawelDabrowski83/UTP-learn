@@ -8,12 +8,11 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
-import java.util.Set;
 
 public class ChatClient implements Runnable {
     private String host;
-    private String filename = getClass().getSimpleName() + "Log.txt";
     private int port;
+    private String filename = getClass().getSimpleName() + "Log.txt";
     private PrintWriter logger;
     private int lineCounter = 0;
     private Selector selector;

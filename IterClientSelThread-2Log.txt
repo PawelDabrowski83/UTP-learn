@@ -1,0 +1,29 @@
+0 || Starting client.
+1 || Connecting.
+2 || Connected.
+3 || Request prepared: HELLO
+4 || Writing: HELLO
+5 || Received: CONFIRM
+6 || Request prepared: -180
+7 || Writing: -180
+8 || Received: -179
+9 || Request prepared: 156
+10 || Writing: 156
+11 || Received: 157
+12 || Request prepared: 85
+13 || Writing: 85
+14 || Received: 86
+15 || Request prepared: 45
+16 || Writing: 45
+17 || Received: 46
+18 || Request prepared: -122
+19 || Writing: -122
+20 || Received: -121
+21 || Request prepared: 34
+22 || Writing: 34
+23 || Received: 35
+24 || Request prepared: STOP
+25 || Writing: STOP
+26 || Received: STOPPING
+27 || Stopping client
+28 || Client closed - 2023-12-30T19:26:24.095498500

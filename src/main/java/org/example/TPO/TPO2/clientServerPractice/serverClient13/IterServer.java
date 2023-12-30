@@ -53,8 +53,7 @@ public class IterServer {
 
     private void serviceRequests() {
         log("Server operating.");
-        while(true) {
-
+        while(!Thread.currentThread().isInterrupted()) {
             int readyChannels = 0;
             try {
                 readyChannels = sel.select();
@@ -88,6 +87,7 @@ public class IterServer {
                 }
             }
         }
+        log("Server loop closed.");
 
 
 
