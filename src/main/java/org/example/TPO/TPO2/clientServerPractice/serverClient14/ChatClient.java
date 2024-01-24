@@ -116,6 +116,11 @@ public class ChatClient implements Runnable {
             message = scanner.nextLine();
             sendRequest(message);
         }
+        try {
+            channel.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
