@@ -2,6 +2,12 @@ package org.example.TPO.TPO2;
 
 public class Dobranoc {
     public static void main(String[] args) {
-        System.out.println("Dobra" + "noc");
+        Thread localThread = new Thread(() -> {
+            while(!Thread.currentThread().isInterrupted()) {
+                System.out.println("Test!");
+
+            }
+        });
+        localThread.start();
     }
 }

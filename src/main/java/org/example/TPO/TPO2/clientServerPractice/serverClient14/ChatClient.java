@@ -75,9 +75,11 @@ public class ChatClient implements Runnable {
 
     private void openListeningChannel() {
         Thread listeningThread = new Thread(() -> {
-            while (Thread.currentThread().isInterrupted()) {
+            while (!Thread.currentThread().isInterrupted()) {
                 String message = readFrom(channel);
-                System.out.println(message);
+                if (message != null && message.length() > 0) {
+                    System.out.println(message);
+                }
             }
         });
         log("Opening listening channel.");
@@ -85,6 +87,13 @@ public class ChatClient implements Runnable {
     }
 
     public static String readFrom(SocketChannel channel) {
+        PrintWriter staticLogger;
+        try {
+            staticLogger = new PrintWriter(new FileWriter(Thread.currentThread().getName() + "Log.txt"), true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        logStatic(staticLogger, "Trying to read");
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         String message = "";
         int bytesRead = 0;
@@ -115,6 +124,7 @@ public class ChatClient implements Runnable {
             System.out.printf("[%s]: ", username);
             message = scanner.nextLine();
             sendRequest(message);
+            log("Sending: " + message);
         }
         try {
             channel.close();
@@ -140,6 +150,10 @@ public class ChatClient implements Runnable {
                     String.format("%d || %s", lineCounter++, message)
             );
         }
+    }
+
+    private static void logStatic(PrintWriter writer, String message) {
+        writer.println(message);
     }
 
     private void logException(String message) {

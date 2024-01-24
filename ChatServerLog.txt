@@ -1,0 +1,10 @@
+0 || Starting server.
+1 || Searching for connections
+2 || Opening connection with client
+3 || Reading request.
+4 || Received: [Bob]: hi
+
+5 || Start broadcasting: [Bob]: hi
+
+6 || Looking for clients
+7 || Client found and broadcasting

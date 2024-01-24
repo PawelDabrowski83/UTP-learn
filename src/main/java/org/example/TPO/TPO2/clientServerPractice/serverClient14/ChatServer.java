@@ -142,7 +142,9 @@ public class ChatServer implements Runnable {
         String message = (String) current.attachment();
         log("Start broadcasting: " + message);
         for (SelectionKey key : selector.selectedKeys()) {
+            log("Looking for clients");
             if (key.isValid() && key.isReadable()) {
+                log("Client found and broadcasting");
                 SocketChannel channel = (SocketChannel) key.channel();
                 try {
                     channel.write(ByteBuffer.wrap(message.getBytes()));
